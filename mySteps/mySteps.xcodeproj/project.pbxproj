@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		5909675F2BDC273C00B01910 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5909675E2BDC273C00B01910 /* AppDelegate.swift */; };
 		590967612BDC273C00B01910 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590967602BDC273C00B01910 /* SceneDelegate.swift */; };
-		590967632BDC273C00B01910 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590967622BDC273C00B01910 /* ViewController.swift */; };
+		590967632BDC273C00B01910 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590967622BDC273C00B01910 /* HomeViewController.swift */; };
 		590967662BDC273C00B01910 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 590967652BDC273C00B01910 /* Base */; };
 		590967692BDC273C00B01910 /* mySteps.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 590967672BDC273C00B01910 /* mySteps.xcdatamodeld */; };
 		5909676B2BDC273D00B01910 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5909676A2BDC273D00B01910 /* Assets.xcassets */; };
@@ -17,6 +17,17 @@
 		590967792BDC273D00B01910 /* myStepsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590967782BDC273D00B01910 /* myStepsTests.swift */; };
 		590967832BDC273D00B01910 /* myStepsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590967822BDC273D00B01910 /* myStepsUITests.swift */; };
 		590967852BDC273D00B01910 /* myStepsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590967842BDC273D00B01910 /* myStepsUITestsLaunchTests.swift */; };
+		59AEB9B22BDC2D2C00E0AE3D /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9B12BDC2D2C00E0AE3D /* MainCoordinator.swift */; };
+		59AEB9B42BDC2D4200E0AE3D /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9B32BDC2D4200E0AE3D /* CoordinatorProtocol.swift */; };
+		59AEB9B62BDC2D8300E0AE3D /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9B52BDC2D8300E0AE3D /* Session.swift */; };
+		59AEB9B92BDC2DC800E0AE3D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9B82BDC2DC800E0AE3D /* Constants.swift */; };
+		59AEB9BD2BDC2DD700E0AE3D /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9BC2BDC2DD700E0AE3D /* DatabaseManager.swift */; };
+		59AEB9C32BDC305E00E0AE3D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9C22BDC305E00E0AE3D /* HomeViewModel.swift */; };
+		59AEB9C52BDC308F00E0AE3D /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9C42BDC308F00E0AE3D /* ViewModelProtocol.swift */; };
+		59AEB9C72BDDA05B00E0AE3D /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9C62BDDA05B00E0AE3D /* HealthKitManager.swift */; };
+		59AEB9C92BDDA0C800E0AE3D /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9C82BDDA0C800E0AE3D /* CoreDataManager.swift */; };
+		59AEB9CE2BDDA1C700E0AE3D /* ArchivementsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9CD2BDDA1C700E0AE3D /* ArchivementsTableView.swift */; };
+		59AEB9D02BDDA1EE00E0AE3D /* ArchivementsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9CF2BDDA1EE00E0AE3D /* ArchivementsCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +51,7 @@
 		5909675B2BDC273C00B01910 /* mySteps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mySteps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5909675E2BDC273C00B01910 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		590967602BDC273C00B01910 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		590967622BDC273C00B01910 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		590967622BDC273C00B01910 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		590967652BDC273C00B01910 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		590967682BDC273C00B01910 /* mySteps.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = mySteps.xcdatamodel; sourceTree = "<group>"; };
 		5909676A2BDC273D00B01910 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +62,17 @@
 		5909677E2BDC273D00B01910 /* myStepsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myStepsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		590967822BDC273D00B01910 /* myStepsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myStepsUITests.swift; sourceTree = "<group>"; };
 		590967842BDC273D00B01910 /* myStepsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myStepsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		59AEB9B12BDC2D2C00E0AE3D /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		59AEB9B32BDC2D4200E0AE3D /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		59AEB9B52BDC2D8300E0AE3D /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		59AEB9B82BDC2DC800E0AE3D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		59AEB9BC2BDC2DD700E0AE3D /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		59AEB9C22BDC305E00E0AE3D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		59AEB9C42BDC308F00E0AE3D /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
+		59AEB9C62BDDA05B00E0AE3D /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		59AEB9C82BDDA0C800E0AE3D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		59AEB9CD2BDDA1C700E0AE3D /* ArchivementsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivementsTableView.swift; sourceTree = "<group>"; };
+		59AEB9CF2BDDA1EE00E0AE3D /* ArchivementsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivementsCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,9 +123,13 @@
 		5909675D2BDC273C00B01910 /* mySteps */ = {
 			isa = PBXGroup;
 			children = (
+				59AEB9CC2BDDA1B900E0AE3D /* Views */,
+				59AEB9C12BDC305000E0AE3D /* ViewModels */,
+				59AEB9C02BDC304B00E0AE3D /* ViewControllers */,
+				59AEB9B72BDC2DB900E0AE3D /* Managers */,
+				59AEB9B02BDC2D1D00E0AE3D /* Coordinators */,
 				5909675E2BDC273C00B01910 /* AppDelegate.swift */,
 				590967602BDC273C00B01910 /* SceneDelegate.swift */,
-				590967622BDC273C00B01910 /* ViewController.swift */,
 				590967642BDC273C00B01910 /* Main.storyboard */,
 				5909676A2BDC273D00B01910 /* Assets.xcassets */,
 				5909676C2BDC273D00B01910 /* LaunchScreen.storyboard */,
@@ -128,6 +154,61 @@
 				590967842BDC273D00B01910 /* myStepsUITestsLaunchTests.swift */,
 			);
 			path = myStepsUITests;
+			sourceTree = "<group>";
+		};
+		59AEB9B02BDC2D1D00E0AE3D /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				59AEB9B12BDC2D2C00E0AE3D /* MainCoordinator.swift */,
+				59AEB9B32BDC2D4200E0AE3D /* CoordinatorProtocol.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		59AEB9B72BDC2DB900E0AE3D /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				59AEB9B52BDC2D8300E0AE3D /* Session.swift */,
+				59AEB9B82BDC2DC800E0AE3D /* Constants.swift */,
+				59AEB9BC2BDC2DD700E0AE3D /* DatabaseManager.swift */,
+				59AEB9C62BDDA05B00E0AE3D /* HealthKitManager.swift */,
+				59AEB9C82BDDA0C800E0AE3D /* CoreDataManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		59AEB9C02BDC304B00E0AE3D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				590967622BDC273C00B01910 /* HomeViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		59AEB9C12BDC305000E0AE3D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				59AEB9C22BDC305E00E0AE3D /* HomeViewModel.swift */,
+				59AEB9C42BDC308F00E0AE3D /* ViewModelProtocol.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		59AEB9CC2BDDA1B900E0AE3D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				59AEB9D12BDDA1F000E0AE3D /* Archivements */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		59AEB9D12BDDA1F000E0AE3D /* Archivements */ = {
+			isa = PBXGroup;
+			children = (
+				59AEB9CD2BDDA1C700E0AE3D /* ArchivementsTableView.swift */,
+				59AEB9CF2BDDA1EE00E0AE3D /* ArchivementsCell.swift */,
+			);
+			path = Archivements;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,10 +342,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				590967632BDC273C00B01910 /* ViewController.swift in Sources */,
+				59AEB9B62BDC2D8300E0AE3D /* Session.swift in Sources */,
+				590967632BDC273C00B01910 /* HomeViewController.swift in Sources */,
+				59AEB9C72BDDA05B00E0AE3D /* HealthKitManager.swift in Sources */,
+				59AEB9BD2BDC2DD700E0AE3D /* DatabaseManager.swift in Sources */,
 				590967692BDC273C00B01910 /* mySteps.xcdatamodeld in Sources */,
+				59AEB9C52BDC308F00E0AE3D /* ViewModelProtocol.swift in Sources */,
+				59AEB9B42BDC2D4200E0AE3D /* CoordinatorProtocol.swift in Sources */,
+				59AEB9C92BDDA0C800E0AE3D /* CoreDataManager.swift in Sources */,
 				5909675F2BDC273C00B01910 /* AppDelegate.swift in Sources */,
+				59AEB9C32BDC305E00E0AE3D /* HomeViewModel.swift in Sources */,
+				59AEB9B22BDC2D2C00E0AE3D /* MainCoordinator.swift in Sources */,
+				59AEB9D02BDDA1EE00E0AE3D /* ArchivementsCell.swift in Sources */,
 				590967612BDC273C00B01910 /* SceneDelegate.swift in Sources */,
+				59AEB9CE2BDDA1C700E0AE3D /* ArchivementsTableView.swift in Sources */,
+				59AEB9B92BDC2DC800E0AE3D /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
