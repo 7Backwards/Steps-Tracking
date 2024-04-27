@@ -18,8 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let navigationController = UINavigationController()
         let constants = Constants()
+        let databaseManager = DatabaseManager(coredataManager: CoreDataManager())
 
-        let session = Session(constants: constants, healthKitManager: HealthKitManager(), databaseManager: DatabaseManager(coredataManager: CoreDataManager()))
+        let session = Session(constants: constants, healthKitManager: HealthKitManager(databaseManager: databaseManager), databaseManager: databaseManager)
 
         window = UIWindow(frame: UIScreen.main.bounds)
 
