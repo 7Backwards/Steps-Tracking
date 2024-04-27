@@ -13,6 +13,7 @@ class HomeViewController: UIViewController {
 
     let viewModel: HomeViewModel
     lazy var tableView = ArchivementsTableView(frame: .zero)
+    lazy var stepsChart = StepsChart(viewModel: StepsChartViewModel())
 
     // MARK: - Init
 

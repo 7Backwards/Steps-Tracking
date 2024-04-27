@@ -28,6 +28,10 @@
 		59AEB9C92BDDA0C800E0AE3D /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9C82BDDA0C800E0AE3D /* CoreDataManager.swift */; };
 		59AEB9CE2BDDA1C700E0AE3D /* ArchivementsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9CD2BDDA1C700E0AE3D /* ArchivementsTableView.swift */; };
 		59AEB9D02BDDA1EE00E0AE3D /* ArchivementsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9CF2BDDA1EE00E0AE3D /* ArchivementsCell.swift */; };
+		59AEB9D42BDDA72D00E0AE3D /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 59AEB9D32BDDA72D00E0AE3D /* DGCharts */; };
+		59AEB9D62BDDA72D00E0AE3D /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 59AEB9D52BDDA72D00E0AE3D /* DGChartsDynamic */; };
+		59AEB9D82BDDA73E00E0AE3D /* StepsChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9D72BDDA73E00E0AE3D /* StepsChart.swift */; };
+		59AEB9DB2BDDA7C400E0AE3D /* StepsChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9DA2BDDA7C400E0AE3D /* StepsChartViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +77,8 @@
 		59AEB9C82BDDA0C800E0AE3D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		59AEB9CD2BDDA1C700E0AE3D /* ArchivementsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivementsTableView.swift; sourceTree = "<group>"; };
 		59AEB9CF2BDDA1EE00E0AE3D /* ArchivementsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivementsCell.swift; sourceTree = "<group>"; };
+		59AEB9D72BDDA73E00E0AE3D /* StepsChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsChart.swift; sourceTree = "<group>"; };
+		59AEB9DA2BDDA7C400E0AE3D /* StepsChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsChartViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +86,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59AEB9D62BDDA72D00E0AE3D /* DGChartsDynamic in Frameworks */,
+				59AEB9D42BDDA72D00E0AE3D /* DGCharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,6 +198,7 @@
 			children = (
 				59AEB9C22BDC305E00E0AE3D /* HomeViewModel.swift */,
 				59AEB9C42BDC308F00E0AE3D /* ViewModelProtocol.swift */,
+				59AEB9DA2BDDA7C400E0AE3D /* StepsChartViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -197,6 +206,7 @@
 		59AEB9CC2BDDA1B900E0AE3D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				59AEB9D92BDDA74200E0AE3D /* Steps */,
 				59AEB9D12BDDA1F000E0AE3D /* Archivements */,
 			);
 			path = Views;
@@ -209,6 +219,14 @@
 				59AEB9CF2BDDA1EE00E0AE3D /* ArchivementsCell.swift */,
 			);
 			path = Archivements;
+			sourceTree = "<group>";
+		};
+		59AEB9D92BDDA74200E0AE3D /* Steps */ = {
+			isa = PBXGroup;
+			children = (
+				59AEB9D72BDDA73E00E0AE3D /* StepsChart.swift */,
+			);
+			path = Steps;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,6 +245,10 @@
 			dependencies = (
 			);
 			name = mySteps;
+			packageProductDependencies = (
+				59AEB9D32BDDA72D00E0AE3D /* DGCharts */,
+				59AEB9D52BDDA72D00E0AE3D /* DGChartsDynamic */,
+			);
 			productName = mySteps;
 			productReference = 5909675B2BDC273C00B01910 /* mySteps.app */;
 			productType = "com.apple.product-type.application";
@@ -299,6 +321,9 @@
 				Base,
 			);
 			mainGroup = 590967522BDC273C00B01910;
+			packageReferences = (
+				59AEB9D22BDDA72D00E0AE3D /* XCRemoteSwiftPackageReference "Charts" */,
+			);
 			productRefGroup = 5909675C2BDC273C00B01910 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -346,6 +371,7 @@
 				590967632BDC273C00B01910 /* HomeViewController.swift in Sources */,
 				59AEB9C72BDDA05B00E0AE3D /* HealthKitManager.swift in Sources */,
 				59AEB9BD2BDC2DD700E0AE3D /* DatabaseManager.swift in Sources */,
+				59AEB9DB2BDDA7C400E0AE3D /* StepsChartViewModel.swift in Sources */,
 				590967692BDC273C00B01910 /* mySteps.xcdatamodeld in Sources */,
 				59AEB9C52BDC308F00E0AE3D /* ViewModelProtocol.swift in Sources */,
 				59AEB9B42BDC2D4200E0AE3D /* CoordinatorProtocol.swift in Sources */,
@@ -354,6 +380,7 @@
 				59AEB9C32BDC305E00E0AE3D /* HomeViewModel.swift in Sources */,
 				59AEB9B22BDC2D2C00E0AE3D /* MainCoordinator.swift in Sources */,
 				59AEB9D02BDDA1EE00E0AE3D /* ArchivementsCell.swift in Sources */,
+				59AEB9D82BDDA73E00E0AE3D /* StepsChart.swift in Sources */,
 				590967612BDC273C00B01910 /* SceneDelegate.swift in Sources */,
 				59AEB9CE2BDDA1C700E0AE3D /* ArchivementsTableView.swift in Sources */,
 				59AEB9B92BDC2DC800E0AE3D /* Constants.swift in Sources */,
@@ -705,6 +732,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		59AEB9D22BDDA72D00E0AE3D /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		59AEB9D32BDDA72D00E0AE3D /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59AEB9D22BDDA72D00E0AE3D /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		59AEB9D52BDDA72D00E0AE3D /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 59AEB9D22BDDA72D00E0AE3D /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		590967672BDC273C00B01910 /* mySteps.xcdatamodeld */ = {
