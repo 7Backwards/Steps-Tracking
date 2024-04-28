@@ -1,5 +1,5 @@
 //
-//  StepsInMonth+CoreDataClass.swift
+//  StepsInMonthMO+CoreDataClass.swift
 //  mySteps
 //
 //  Created by Gonçalo on 28/04/2024.
@@ -9,8 +9,8 @@
 import Foundation
 import CoreData
 
-@objc(StepsInMonth)
-public class StepsInMonth: NSManagedObject {
+@objc(StepsInMonthMO)
+public class StepsInMonthMO: NSManagedObject {
     @NSManaged public var month: Int16
     @NSManaged public var year: Int16
 }

@@ -1,5 +1,5 @@
 //
-//  StepsPerDay+CoreDataProperties.swift
+//  StepsPerDayMO+CoreDataProperties.swift
 //  mySteps
 //
 //  Created by Gonçalo on 28/04/2024.
@@ -10,18 +10,18 @@ import Foundation
 import CoreData
 
 
-extension StepsPerDay {
+extension StepsPerDayMO {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<StepsPerDay> {
-        return NSFetchRequest<StepsPerDay>(entityName: "StepsPerDay")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<StepsPerDayMO> {
+        return NSFetchRequest<StepsPerDayMO>(entityName: "StepsPerDayMO")
     }
 
     @NSManaged public var date: Date
     @NSManaged public var steps: Double
-    @NSManaged public var month: StepsInMonth?
+    @NSManaged public var month: StepsInMonthMO?
 
 }
 
-extension StepsPerDay : Identifiable {
+extension StepsPerDayMO : Identifiable {
 
 }

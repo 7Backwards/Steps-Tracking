@@ -39,11 +39,9 @@ class DatabaseManager {
     }
     
     private func fetchCurrentMonthSteps() {
-        coreDataManager.fetchStepsForCurrentMonth { steps, error in
-            if let steps {
-                steps.forEach { step in
-                    print("Date: \(step.date), Steps: \(step.steps)")
-                }
+        coreDataManager.fetchStepsForCurrentMonth { stepsInMonthMO, error in
+            if let stepsInMonthMO {
+                let stepsInMonth = StepsInMonth(from: stepsInMonthMO)
             } else if let error {
                 os_log("Error fetching steps: %{public}@", type: .error, error.localizedDescription)
             }

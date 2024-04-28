@@ -49,13 +49,13 @@ class CoreDataManager {
     func saveContext(context: NSManagedObjectContext) {
         if context.hasChanges {
             do {
-                // Check if StepsInMonth objects are affected and notify if necessary
-                let stepsInMonthAffected = context.registeredObjects.contains { object in
-                    object is StepsInMonth && (object.isUpdated || object.isInserted || object.isDeleted)
+                // Check if StepsInMonthMO objects are affected and notify if necessary
+                let StepsInMonthMOAffected = context.registeredObjects.contains { object in
+                    object is StepsInMonthMO && (object.isUpdated || object.isInserted || object.isDeleted)
                 }
                 try context.save()
 
-                if stepsInMonthAffected {
+                if StepsInMonthMOAffected {
                     stepsUpdated.send()
                     print("stepsUpdated")
                 }
@@ -82,20 +82,20 @@ extension CoreDataManager {
             
             // Loop through the grouped data to insert
             for (monthComponents, dates) in groupedByMonth {
-                let stepsInMonth = StepsInMonth(context: context)
+                let StepsInMonthMO = StepsInMonthMO(context: context)
                 guard let year = monthComponents.year, let month = monthComponents.month else { 
                     os_log("Error retreving year or month", type: .error)
                     return
                 } 
-                stepsInMonth.year = Int16(year) 
-                stepsInMonth.month = Int16(month)
+                StepsInMonthMO.year = Int16(year) 
+                StepsInMonthMO.month = Int16(month)
                 
                 for date in dates {
                     let steps = stepsData[date] ?? 0
-                    let stepsPerDay = StepsPerDay(context: context)
-                    stepsPerDay.date = date
-                    stepsPerDay.steps = steps
-                    stepsPerDay.month = stepsInMonth // Link StepsPerDay to StepsInMonth
+                    let StepsPerDayMO = StepsPerDayMO(context: context)
+                    StepsPerDayMO.date = date
+                    StepsPerDayMO.steps = steps
+                    StepsPerDayMO.month = StepsInMonthMO // Link StepsPerDayMO to StepsInMonthMO
                 }
             }
             
@@ -109,17 +109,17 @@ extension CoreDataManager {
     private func clearStepsData(in context: NSManagedObjectContext) {
         
         // Create fetch requests for the entities you want to clear
-        let stepsPerDayFetchRequest: NSFetchRequest<NSFetchRequestResult> = StepsPerDay.fetchRequest()
-        let stepsInMonthFetchRequest: NSFetchRequest<NSFetchRequestResult> = StepsInMonth.fetchRequest()
+        let StepsPerDayMOFetchRequest: NSFetchRequest<NSFetchRequestResult> = StepsPerDayMO.fetchRequest()
+        let StepsInMonthMOFetchRequest: NSFetchRequest<NSFetchRequestResult> = StepsInMonthMO.fetchRequest()
         
         // Create batch delete requests for each entity
-        let stepsPerDayDeleteRequest = NSBatchDeleteRequest(fetchRequest: stepsPerDayFetchRequest)
-        let stepsInMonthDeleteRequest = NSBatchDeleteRequest(fetchRequest: stepsInMonthFetchRequest)
+        let StepsPerDayMODeleteRequest = NSBatchDeleteRequest(fetchRequest: StepsPerDayMOFetchRequest)
+        let StepsInMonthMODeleteRequest = NSBatchDeleteRequest(fetchRequest: StepsInMonthMOFetchRequest)
         
         do {
             // Perform the batch delete operation
-            try context.execute(stepsPerDayDeleteRequest)
-            try context.execute(stepsInMonthDeleteRequest)
+            try context.execute(StepsPerDayMODeleteRequest)
+            try context.execute(StepsInMonthMODeleteRequest)
             
             // Save any changes to the context
             try context.save()
@@ -134,33 +134,40 @@ extension CoreDataManager {
 
 extension CoreDataManager {
     
-    func fetchStepsForCurrentMonth(completion: @escaping ([StepsPerDay]?, Error?) -> Void) {
-        
+    func fetchStepsForCurrentMonth(completion: @escaping (StepsInMonthMO?, Error?) -> Void) {
         persistentContainer.performBackgroundTask { context in
-            let fetchRequest: NSFetchRequest<StepsInMonth> = StepsInMonth.fetchRequest()
-            
+            let fetchRequest: NSFetchRequest<StepsInMonthMO> = StepsInMonthMO.fetchRequest()
+
             // Get the current year and month
             let calendar = Calendar.current
-            let components = calendar.dateComponents([.year, .month], from: Date())
-            guard let year = components.year, let month = components.month else {
-                completion(nil, NSError(domain: "CoreDataManager", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to extract the year and month from the current date."]))
+            let now = Date()
+            guard let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: now)),
+                  let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) else {
+                completion(nil, NSError(domain: "CoreDataManager", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to construct the date range for the current month."]))
                 return
             }
             
-            // Create a predicate to fetch the StepsInMonth for the current year and month
-            fetchRequest.predicate = NSPredicate(format: "year == %d AND month == %d", Int16(year), Int16(month))
+            // Create a predicate to fetch the StepsInMonthMO for the current year and month
+            fetchRequest.predicate = NSPredicate(format: "year == %d AND month == %d", Int16(calendar.component(.year, from: startOfMonth)), Int16(calendar.component(.month, from: startOfMonth)))
             
             do {
                 // Execute the fetch request
                 let results = try context.fetch(fetchRequest)
-                // Assuming there is at most one StepsInMonth entity per month
-                if let stepsInMonth = results.first {
-                    // Get the ordered steps from the StepsInMonth.days relationship
-                    let stepsArray = stepsInMonth.days?.array as? [StepsPerDay] ?? []
-                    completion(stepsArray, nil)
+                // Assuming there is at most one StepsInMonthMO entity per month
+                if let stepsInMonthMO = results.first {
+                    // Check if the fetched steps are within the current month
+                    if let steps = stepsInMonthMO.days?.array as? [StepsPerDayMO],
+                       steps.allSatisfy({ step in
+                           step.date >= startOfMonth && step.date < calendar.date(byAdding: .day, value: 1, to: endOfMonth)!
+                       }) {
+                        completion(stepsInMonthMO, nil)
+                    } else {
+                        // The fetched entity does not have steps within the current month
+                        completion(nil, nil)
+                    }
                 } else {
-                    // No StepsInMonth entity found for this month, return an empty array
-                    completion([], nil)
+                    // No StepsInMonthMO entity found for this month
+                    completion(nil, nil)
                 }
             } catch {
                 completion(nil, error)

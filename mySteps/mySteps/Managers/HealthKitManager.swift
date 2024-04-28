@@ -141,16 +141,16 @@ class HealthKitManager {
             }
             
             // Dictionary to hold the number of steps for each day
-            var stepsPerDay: [Date: Double] = [:]
+            var StepsPerDayMO: [Date: Double] = [:]
             
             // Enumerate through the collection and store the total steps for each day
             statsCollection.enumerateStatistics(from: startOfMonth, to: now) { statistics, stop in
                 let date = statistics.startDate
                 let steps = statistics.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0
-                stepsPerDay[date] = steps
+                StepsPerDayMO[date] = steps
             }
             
-            self?.databaseManager.saveStepsData(stepsPerDay)
+            self?.databaseManager.saveStepsData(StepsPerDayMO)
         }
         
         // Execute the query
