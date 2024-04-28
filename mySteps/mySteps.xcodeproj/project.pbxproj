@@ -32,6 +32,10 @@
 		59AEB9D62BDDA72D00E0AE3D /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 59AEB9D52BDDA72D00E0AE3D /* DGChartsDynamic */; };
 		59AEB9D82BDDA73E00E0AE3D /* StepsChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9D72BDDA73E00E0AE3D /* StepsChart.swift */; };
 		59AEB9DB2BDDA7C400E0AE3D /* StepsChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9DA2BDDA7C400E0AE3D /* StepsChartViewModel.swift */; };
+		59AEB9E42BDDC0E400E0AE3D /* StepsPerDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9E02BDDC0E400E0AE3D /* StepsPerDay+CoreDataClass.swift */; };
+		59AEB9E52BDDC0E400E0AE3D /* StepsPerDay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9E12BDDC0E400E0AE3D /* StepsPerDay+CoreDataProperties.swift */; };
+		59AEB9E62BDDC0E400E0AE3D /* StepsInMonth+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9E22BDDC0E400E0AE3D /* StepsInMonth+CoreDataClass.swift */; };
+		59AEB9E72BDDC0E400E0AE3D /* StepsInMonth+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9E32BDDC0E400E0AE3D /* StepsInMonth+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +84,10 @@
 		59AEB9D72BDDA73E00E0AE3D /* StepsChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsChart.swift; sourceTree = "<group>"; };
 		59AEB9DA2BDDA7C400E0AE3D /* StepsChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsChartViewModel.swift; sourceTree = "<group>"; };
 		59AEB9DE2BDDB11D00E0AE3D /* mySteps.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mySteps.entitlements; sourceTree = "<group>"; };
+		59AEB9E02BDDC0E400E0AE3D /* StepsPerDay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StepsPerDay+CoreDataClass.swift"; sourceTree = "<group>"; };
+		59AEB9E12BDDC0E400E0AE3D /* StepsPerDay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StepsPerDay+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		59AEB9E22BDDC0E400E0AE3D /* StepsInMonth+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StepsInMonth+CoreDataClass.swift"; sourceTree = "<group>"; };
+		59AEB9E32BDDC0E400E0AE3D /* StepsInMonth+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StepsInMonth+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +140,7 @@
 		5909675D2BDC273C00B01910 /* mySteps */ = {
 			isa = PBXGroup;
 			children = (
+				59AEB9DF2BDDC0B800E0AE3D /* Models */,
 				59AEB9DE2BDDB11D00E0AE3D /* mySteps.entitlements */,
 				59AEB9CC2BDDA1B900E0AE3D /* Views */,
 				59AEB9C12BDC305000E0AE3D /* ViewModels */,
@@ -229,6 +238,17 @@
 				59AEB9D72BDDA73E00E0AE3D /* StepsChart.swift */,
 			);
 			path = Steps;
+			sourceTree = "<group>";
+		};
+		59AEB9DF2BDDC0B800E0AE3D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				59AEB9E02BDDC0E400E0AE3D /* StepsPerDay+CoreDataClass.swift */,
+				59AEB9E12BDDC0E400E0AE3D /* StepsPerDay+CoreDataProperties.swift */,
+				59AEB9E22BDDC0E400E0AE3D /* StepsInMonth+CoreDataClass.swift */,
+				59AEB9E32BDDC0E400E0AE3D /* StepsInMonth+CoreDataProperties.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -376,6 +396,10 @@
 				59AEB9DB2BDDA7C400E0AE3D /* StepsChartViewModel.swift in Sources */,
 				590967692BDC273C00B01910 /* mySteps.xcdatamodeld in Sources */,
 				59AEB9C52BDC308F00E0AE3D /* ViewModelProtocol.swift in Sources */,
+				59AEB9E42BDDC0E400E0AE3D /* StepsPerDay+CoreDataClass.swift in Sources */,
+				59AEB9E52BDDC0E400E0AE3D /* StepsPerDay+CoreDataProperties.swift in Sources */,
+				59AEB9E62BDDC0E400E0AE3D /* StepsInMonth+CoreDataClass.swift in Sources */,
+				59AEB9E72BDDC0E400E0AE3D /* StepsInMonth+CoreDataProperties.swift in Sources */,
 				59AEB9B42BDC2D4200E0AE3D /* CoordinatorProtocol.swift in Sources */,
 				59AEB9C92BDDA0C800E0AE3D /* CoreDataManager.swift in Sources */,
 				5909675F2BDC273C00B01910 /* AppDelegate.swift in Sources */,

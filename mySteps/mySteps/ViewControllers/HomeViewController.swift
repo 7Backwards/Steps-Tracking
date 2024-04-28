@@ -31,7 +31,12 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .red
-        viewModel.session.healthKitManager.startObservingStepsChanges()
+        viewModel.startObservingStepsChanges()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.stopObservingStepsChanges()
     }
     
     // MARK: - Public methods

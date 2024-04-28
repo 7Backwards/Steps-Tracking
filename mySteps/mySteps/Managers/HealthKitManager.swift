@@ -130,7 +130,7 @@ class HealthKitManager {
                                                 intervalComponents: DateComponents(day: 1))
         
         // Set the results handler for the query
-        query.initialResultsHandler = { query, results, error in
+        query.initialResultsHandler = { [weak self] query, results, error in
             if let error {
                 os_log("HealthKit Query Error: %{public}@", type: .error, error.localizedDescription)
             }
@@ -150,7 +150,7 @@ class HealthKitManager {
                 stepsPerDay[date] = steps
             }
             
-            // TODO: save steps to CoreData
+            self?.databaseManager.saveStepsData(stepsPerDay)
         }
         
         // Execute the query

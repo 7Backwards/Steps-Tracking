@@ -15,4 +15,12 @@ class HomeViewModel: ViewModelProtocol {
         self.session = session
         self.coordinator = coordinator
     }
+    
+    func startObservingStepsChanges() {
+        session.healthKitManager.startObservingStepsChanges()
+    }
+    
+    func stopObservingStepsChanges() {
+        session.healthKitManager.stopObservingStepsChanges()
+    }
 }
