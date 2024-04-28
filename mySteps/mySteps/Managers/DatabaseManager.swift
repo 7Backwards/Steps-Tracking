@@ -15,6 +15,7 @@ class DatabaseManager {
 
     private let coreDataManager: CoreDataManager
     private var cancellables: Set<AnyCancellable> = []
+    let stepsInCurrentMonth = CurrentValueSubject<StepsInMonth?, Never>(nil)
     
     // MARK: - Init
 
@@ -39,9 +40,9 @@ class DatabaseManager {
     }
     
     private func fetchCurrentMonthSteps() {
-        coreDataManager.fetchStepsForCurrentMonth { stepsInMonthMO, error in
+        coreDataManager.fetchStepsForCurrentMonth { [weak self] stepsInMonthMO, error in
             if let stepsInMonthMO {
-                let stepsInMonth = StepsInMonth(from: stepsInMonthMO)
+                self?.stepsInCurrentMonth.send(StepsInMonth(from: stepsInMonthMO))
             } else if let error {
                 os_log("Error fetching steps: %{public}@", type: .error, error.localizedDescription)
             }

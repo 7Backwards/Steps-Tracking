@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "no-steps.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

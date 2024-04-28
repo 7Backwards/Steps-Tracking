@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import Combine
 
 class HomeViewController: UIViewController {
 
     // MARK: - Properties methods
 
     let viewModel: HomeViewModel
-    lazy var tableView = ArchivementsTableView(frame: .zero)
-    lazy var stepsChart = StepsChart(viewModel: StepsChartViewModel())
+    private var subscriptions: [AnyCancellable] = []
+    let tableView: AchievementsTableView = AchievementsTableView(viewModel: AchievementsTableViewModel(), frame: .zero)
+    let stepsChart = StepsChart(viewModel: StepsChartViewModel())
 
     // MARK: - Init
 
@@ -32,6 +34,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .red
         viewModel.startObservingStepsChanges()
+        setupObservers()
+        setupViews()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -42,6 +46,20 @@ class HomeViewController: UIViewController {
     // MARK: - Public methods
     
     // MARK: - Private methods
+    
+    private func setupViews() {
+        view.addSubview(tableView)
+    }
+    
+    private func setupObservers() {
+        viewModel.session.databaseManager.stepsInCurrentMonth.sink { [weak self] stepsInMonth in
+            guard let self, let stepsInMonth else {
+                return
+            }
 
+            tableView.viewModel.achievements = viewModel.calculateAchievements(from: stepsInMonth.days)
+        }
+        .store(in: &subscriptions)
+    }
 }
 
