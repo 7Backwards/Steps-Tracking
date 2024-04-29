@@ -109,16 +109,13 @@ extension CoreDataManager {
     private func clearStepsData(in context: NSManagedObjectContext) {
         
         // Create fetch requests for the entities you want to clear
-        let StepsPerDayMOFetchRequest: NSFetchRequest<NSFetchRequestResult> = StepsPerDayMO.fetchRequest()
         let StepsInMonthMOFetchRequest: NSFetchRequest<NSFetchRequestResult> = StepsInMonthMO.fetchRequest()
         
         // Create batch delete requests for each entity
-        let StepsPerDayMODeleteRequest = NSBatchDeleteRequest(fetchRequest: StepsPerDayMOFetchRequest)
         let StepsInMonthMODeleteRequest = NSBatchDeleteRequest(fetchRequest: StepsInMonthMOFetchRequest)
         
         do {
             // Perform the batch delete operation
-            try context.execute(StepsPerDayMODeleteRequest)
             try context.execute(StepsInMonthMODeleteRequest)
             
             // Save any changes to the context
