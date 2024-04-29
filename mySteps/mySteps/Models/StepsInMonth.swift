@@ -33,4 +33,17 @@ extension StepsInMonth {
         // Sum the steps for each day to get the total for the month.
         days.reduce(0) { $0 + $1.steps }
     }
+    
+    func getFormattedTotalSteps() -> String {
+        let totalSteps = getTotalSteps()
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = "."
+        
+        if let formattedTotalSteps = formatter.string(from: NSNumber(value: totalSteps)) {
+            return formattedTotalSteps
+        } else {
+            return "\(totalSteps)"
+        }
+    }
 }

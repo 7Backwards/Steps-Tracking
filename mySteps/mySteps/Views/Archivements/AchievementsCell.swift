@@ -7,12 +7,12 @@
 
 import UIKit
 
-class AchievementsCell: UITableViewCell {
+class AchievementsCell: UICollectionViewCell {
     
     // MARK: - Properties
     
     var viewModel: AchievementsCellViewModel?
-    let width: CGFloat = 116.0
+    let imageViewSize: CGFloat = 116.0
 
     // MARK: - Views
     let stepsLabel = UILabel()
@@ -21,8 +21,8 @@ class AchievementsCell: UITableViewCell {
 
     // MARK: - Init
 
-    override init(style: UITableViewCell.CellStyle = .default, reuseIdentifier: String? = nil) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         configureViews()
     }
@@ -36,7 +36,7 @@ class AchievementsCell: UITableViewCell {
     func configure(with viewModel: AchievementsCellViewModel) {
         self.viewModel = viewModel
         // Configure the views with data from the viewModel
-        stepsLabel.text = "\(Int(viewModel.steps)) Steps"
+        stepsLabel.text = viewModel.steps
         dateLabel.text = viewModel.formattedDate
         achievementsImageView.image = viewModel.image
     }
@@ -44,14 +44,14 @@ class AchievementsCell: UITableViewCell {
     // MARK: - Private Methods
     
     private func configureViews() {
+
         // Image setup
         achievementsImageView.contentMode = .scaleAspectFill
         achievementsImageView.clipsToBounds = true
         achievementsImageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(achievementsImageView)
         
-        // This will make the image view circular
-        achievementsImageView.layer.cornerRadius = width / 2 // Half of the width to make it a circle
+        achievementsImageView.layer.cornerRadius = imageViewSize / 2 // Half of the width to make it a circle
         achievementsImageView.layer.masksToBounds = true
         
         stepsLabel.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
@@ -69,11 +69,12 @@ class AchievementsCell: UITableViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            // Image constraints
+
+            // Setup Image constraints
             achievementsImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             achievementsImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            achievementsImageView.widthAnchor.constraint(equalToConstant: width),
-            achievementsImageView.heightAnchor.constraint(equalToConstant: width),
+            achievementsImageView.widthAnchor.constraint(equalToConstant: imageViewSize),
+            achievementsImageView.heightAnchor.constraint(equalToConstant: imageViewSize),
             
             // Steps label constraints
             stepsLabel.topAnchor.constraint(equalTo: achievementsImageView.bottomAnchor, constant: 8),
@@ -86,4 +87,5 @@ class AchievementsCell: UITableViewCell {
         ])
     }
 }
+
 

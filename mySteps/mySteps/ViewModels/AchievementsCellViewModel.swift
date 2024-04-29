@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class AchievementsCellViewModel {
-    let steps: Int
+    let steps: String
     let date: Date
     let image: UIImage?
 
@@ -21,7 +21,7 @@ class AchievementsCellViewModel {
     }
 
     // Initialize the view model with the necessary data
-    init(date: Date, steps: Int, image: UIImage?) {
+    init(date: Date, steps: String, image: UIImage?) {
         self.date = date
         self.steps = steps
         self.image = image

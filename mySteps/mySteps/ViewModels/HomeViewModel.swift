@@ -44,6 +44,6 @@ class HomeViewModel: ViewModelProtocol {
             }
         }
         
-        return achievements
+        return achievements.reversed()
     }
 }

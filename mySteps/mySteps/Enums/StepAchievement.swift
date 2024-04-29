@@ -16,6 +16,10 @@ struct Achievement {
         achievement.rawValue
     }
     
+    var stepsString: String {
+        achievement.stepsString
+    }
+    
     var image: UIImage? {
         achievement.image
     }
@@ -31,6 +35,25 @@ enum StepAchievement: Int, CaseIterable {
     case thirtyFiveK = 35_000
     case fortyK = 40_000
     
+    var stepsString: String {
+        switch self {
+        case .tenK:
+            return "10k Steps"
+        case .fifteenK:
+            return "15k Steps"
+        case .twentyK:
+            return "20k Steps"
+        case .twentyFiveK:
+            return "25k Steps"
+        case .thirtyK:
+            return "30k Steps"
+        case .thirtyFiveK:
+            return "35k Steps"
+        case .fortyK:
+            return "40k Steps"
+        }
+    }
+
     var image: UIImage? {
         switch self {
         case .tenK:

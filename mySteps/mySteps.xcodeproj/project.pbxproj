@@ -26,7 +26,7 @@
 		59AEB9C52BDC308F00E0AE3D /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9C42BDC308F00E0AE3D /* ViewModelProtocol.swift */; };
 		59AEB9C72BDDA05B00E0AE3D /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9C62BDDA05B00E0AE3D /* HealthKitManager.swift */; };
 		59AEB9C92BDDA0C800E0AE3D /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9C82BDDA0C800E0AE3D /* CoreDataManager.swift */; };
-		59AEB9CE2BDDA1C700E0AE3D /* AchievementsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9CD2BDDA1C700E0AE3D /* AchievementsTableView.swift */; };
+		59AEB9CE2BDDA1C700E0AE3D /* AchievementsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9CD2BDDA1C700E0AE3D /* AchievementsCollectionView.swift */; };
 		59AEB9D02BDDA1EE00E0AE3D /* AchievementsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9CF2BDDA1EE00E0AE3D /* AchievementsCell.swift */; };
 		59AEB9D82BDDA73E00E0AE3D /* StepsChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9D72BDDA73E00E0AE3D /* StepsChart.swift */; };
 		59AEB9DB2BDDA7C400E0AE3D /* StepsChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9DA2BDDA7C400E0AE3D /* StepsChartViewModel.swift */; };
@@ -36,7 +36,7 @@
 		59AEB9E72BDDC0E400E0AE3D /* StepsInMonth+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9E32BDDC0E400E0AE3D /* StepsInMonth+CoreDataProperties.swift */; };
 		59AEB9E92BDE619700E0AE3D /* StepsInMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9E82BDE619700E0AE3D /* StepsInMonth.swift */; };
 		59AEB9EB2BDE619E00E0AE3D /* StepsPerDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9EA2BDE619E00E0AE3D /* StepsPerDay.swift */; };
-		59AEB9ED2BDE691600E0AE3D /* AchievementsTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9EC2BDE691600E0AE3D /* AchievementsTableViewModel.swift */; };
+		59AEB9ED2BDE691600E0AE3D /* AchievementsCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9EC2BDE691600E0AE3D /* AchievementsCollectionViewModel.swift */; };
 		59AEB9F02BDE6BF700E0AE3D /* StepAchievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9EF2BDE6BF700E0AE3D /* StepAchievement.swift */; };
 		59AEB9F22BDECD7C00E0AE3D /* AchievementsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9F12BDECD7C00E0AE3D /* AchievementsCellViewModel.swift */; };
 		59AEB9F42BDF09F300E0AE3D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9F32BDF09F300E0AE3D /* Utils.swift */; };
@@ -98,7 +98,7 @@
 		59AEB9C42BDC308F00E0AE3D /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		59AEB9C62BDDA05B00E0AE3D /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		59AEB9C82BDDA0C800E0AE3D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		59AEB9CD2BDDA1C700E0AE3D /* AchievementsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsTableView.swift; sourceTree = "<group>"; };
+		59AEB9CD2BDDA1C700E0AE3D /* AchievementsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsCollectionView.swift; sourceTree = "<group>"; };
 		59AEB9CF2BDDA1EE00E0AE3D /* AchievementsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsCell.swift; sourceTree = "<group>"; };
 		59AEB9D72BDDA73E00E0AE3D /* StepsChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsChart.swift; sourceTree = "<group>"; };
 		59AEB9DA2BDDA7C400E0AE3D /* StepsChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsChartViewModel.swift; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 		59AEB9E32BDDC0E400E0AE3D /* StepsInMonth+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StepsInMonth+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		59AEB9E82BDE619700E0AE3D /* StepsInMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsInMonth.swift; sourceTree = "<group>"; };
 		59AEB9EA2BDE619E00E0AE3D /* StepsPerDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepsPerDay.swift; sourceTree = "<group>"; };
-		59AEB9EC2BDE691600E0AE3D /* AchievementsTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsTableViewModel.swift; sourceTree = "<group>"; };
+		59AEB9EC2BDE691600E0AE3D /* AchievementsCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsCollectionViewModel.swift; sourceTree = "<group>"; };
 		59AEB9EF2BDE6BF700E0AE3D /* StepAchievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepAchievement.swift; sourceTree = "<group>"; };
 		59AEB9F12BDECD7C00E0AE3D /* AchievementsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsCellViewModel.swift; sourceTree = "<group>"; };
 		59AEB9F32BDF09F300E0AE3D /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -237,7 +237,7 @@
 				59AEB9C22BDC305E00E0AE3D /* HomeViewModel.swift */,
 				59AEB9C42BDC308F00E0AE3D /* ViewModelProtocol.swift */,
 				59AEB9DA2BDDA7C400E0AE3D /* StepsChartViewModel.swift */,
-				59AEB9EC2BDE691600E0AE3D /* AchievementsTableViewModel.swift */,
+				59AEB9EC2BDE691600E0AE3D /* AchievementsCollectionViewModel.swift */,
 				59AEB9F12BDECD7C00E0AE3D /* AchievementsCellViewModel.swift */,
 			);
 			path = ViewModels;
@@ -256,7 +256,7 @@
 		59AEB9D12BDDA1F000E0AE3D /* Archivements */ = {
 			isa = PBXGroup;
 			children = (
-				59AEB9CD2BDDA1C700E0AE3D /* AchievementsTableView.swift */,
+				59AEB9CD2BDDA1C700E0AE3D /* AchievementsCollectionView.swift */,
 				59AEB9CF2BDDA1EE00E0AE3D /* AchievementsCell.swift */,
 			);
 			path = Archivements;
@@ -454,10 +454,10 @@
 				59AEB9D02BDDA1EE00E0AE3D /* AchievementsCell.swift in Sources */,
 				59AEB9F62BDF0D7C00E0AE3D /* NoContentView.swift in Sources */,
 				59AEB9D82BDDA73E00E0AE3D /* StepsChart.swift in Sources */,
-				59AEB9ED2BDE691600E0AE3D /* AchievementsTableViewModel.swift in Sources */,
+				59AEB9ED2BDE691600E0AE3D /* AchievementsCollectionViewModel.swift in Sources */,
 				590967612BDC273C00B01910 /* SceneDelegate.swift in Sources */,
 				59AEB9E92BDE619700E0AE3D /* StepsInMonth.swift in Sources */,
-				59AEB9CE2BDDA1C700E0AE3D /* AchievementsTableView.swift in Sources */,
+				59AEB9CE2BDDA1C700E0AE3D /* AchievementsCollectionView.swift in Sources */,
 				59AEB9B92BDC2DC800E0AE3D /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

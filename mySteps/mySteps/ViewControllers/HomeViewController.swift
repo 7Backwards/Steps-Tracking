@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
     private let profilePictureZStackView = UIView()
     private let verticalStackView = UIStackView()
     private let stepsCountAndDateStackView = UIStackView()
-    private let tableView: AchievementsTableView = AchievementsTableView(viewModel: AchievementsTableViewModel(), frame: .zero)
+    private let achievementsCollectionView = AchievementsCollectionView(viewModel: AchievementsCollectionViewModel())
     private let stepsChart = StepsChart(viewModel: StepsChartViewModel())
     
     // MARK: - Init
@@ -67,7 +67,7 @@ class HomeViewController: UIViewController {
         setupProfileImageView()
         setupStepsAndDate()
         setupStepsChart()
-        setupAchievementsTableView()
+        setupAchievementsCollectionView()
     }
     
     private func setupObservers() {
@@ -76,9 +76,9 @@ class HomeViewController: UIViewController {
                 return
             }
             let achievements = viewModel.calculateAchievements(from: stepsInMonth.days)
-            tableView.viewModel.achievements = achievements
+            achievementsCollectionView.viewModel.achievements = achievements
             DispatchQueue.main.async { [weak self] in
-                self?.stepsCountLabel.text = String(stepsInMonth.getTotalSteps())
+                self?.stepsCountLabel.text = stepsInMonth.getFormattedTotalSteps()
                 self?.setupAchievementLabel(achievementCount: String(achievements.count))
             }
         }
@@ -196,44 +196,44 @@ class HomeViewController: UIViewController {
         ])
     }
 
-    private func setupAchievementsTableView() {
+    private func setupAchievementsCollectionView() {
         achievementsLabel.translatesAutoresizingMaskIntoConstraints = false
         achievementsLabel.textAlignment = .left
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-
+        achievementsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         let achievementsContainerView = UIView()
         achievementsContainerView.translatesAutoresizingMaskIntoConstraints = false
+        achievementsContainerView.clipsToBounds = true // Ensure it doesn't overlap other views
         verticalStackView.addArrangedSubview(achievementsContainerView)
 
         achievementsContainerView.addSubview(achievementsLabel)
-        achievementsContainerView.addSubview(tableView)
+        achievementsContainerView.addSubview(achievementsCollectionView)
         
+        // Constraints for the achievements container view
+        NSLayoutConstraint.activate([
+            achievementsContainerView.topAnchor.constraint(equalTo: stepsChart.bottomAnchor, constant: 44),
+            achievementsContainerView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
+            achievementsContainerView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
+            achievementsCollectionView.bottomAnchor.constraint(equalTo: achievementsContainerView.bottomAnchor, constant: -81) // Ensure spacing to the bottom
+        ])
+
         // Constraints for achievements title label
         NSLayoutConstraint.activate([
             achievementsLabel.topAnchor.constraint(equalTo: achievementsContainerView.topAnchor),
             achievementsLabel.leadingAnchor.constraint(equalTo: achievementsContainerView.leadingAnchor, constant: horizontalMargin),
-            achievementsLabel.trailingAnchor.constraint(equalTo: achievementsContainerView.trailingAnchor),
-            // Add spacing between the title label and the table view
-            achievementsLabel.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -8)
+            achievementsLabel.trailingAnchor.constraint(equalTo: achievementsContainerView.trailingAnchor, constant: -horizontalMargin)
         ])
         
-        // Constraints for the achievements table view
+        // Constraints for the achievements collection view
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: achievementsContainerView.leadingAnchor, constant: horizontalMargin),
-            tableView.trailingAnchor.constraint(equalTo: achievementsContainerView.trailingAnchor, constant: -horizontalMargin),
-            tableView.bottomAnchor.constraint(equalTo: achievementsContainerView.bottomAnchor)
-        ])
-        
-        // Constraints for the achievements container view
-        NSLayoutConstraint.activate([
-            achievementsContainerView.topAnchor.constraint(equalTo: stepsChart.bottomAnchor, constant: 20), // Adjust this constant to match the spacing in your design
-            achievementsContainerView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
-            achievementsContainerView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
-            // This constraint sets the distance from the bottom of the container view to the bottom safe area
-            achievementsContainerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20) // Adjust this constant to match the spacing in your design
+            achievementsCollectionView.topAnchor.constraint(equalTo: achievementsLabel.bottomAnchor, constant: 24), // Space between label and collection view
+            achievementsCollectionView.leadingAnchor.constraint(equalTo: achievementsContainerView.leadingAnchor),
+            achievementsCollectionView.trailingAnchor.constraint(equalTo: achievementsContainerView.trailingAnchor),
+            achievementsCollectionView.heightAnchor.constraint(equalToConstant: 176) // Height of the collection view
         ])
     }
+
     
     private func setupAchievementLabel(achievementCount: String) {
         // Create an attributed string with different colors

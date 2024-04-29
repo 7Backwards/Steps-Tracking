@@ -10,9 +10,11 @@ import Combine
 
 import UIKit
 
-class AchievementsTableViewModel {
+class AchievementsCollectionViewModel {
     
     let shouldReloadData = PassthroughSubject<Void, Never>()
+    let cellWidthSize: CGFloat = 116
+    let cellHeightSize: CGFloat = 160
     
     var achievements: [Achievement] = [] {
         didSet {
