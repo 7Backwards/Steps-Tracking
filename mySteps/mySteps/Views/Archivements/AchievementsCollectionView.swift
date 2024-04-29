@@ -11,9 +11,17 @@ import OSLog
 
 class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    let viewModel: AchievementsCollectionViewModel
+    // MARK: - Properties
+
     private var subscriptions: [AnyCancellable] = []
+    let viewModel: AchievementsCollectionViewModel
+    var didTapCell: ((Achievement) -> Void)?
+    
+    // MARK: - Views
+    
     private let noContentView = NoContentView(frame: .zero, image: UIImage(named: "no-steps")?.withTintColor(.grey02), title: "No achievements yet", message: "Take the first step!")
+    
+    // MARK: - Init
     
     init(viewModel: AchievementsCollectionViewModel, frame: CGRect = .zero, collectionViewLayout layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
         self.viewModel = viewModel
@@ -34,6 +42,8 @@ class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UI
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
+    
     override func layoutSubviews() {
         super.layoutSubviews()
 
@@ -41,6 +51,8 @@ class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UI
         contentInset = UIEdgeInsets(top: 0, left: 33, bottom: 0, right: 0)
         noContentView.frame = bounds // Ensure the no content view resizes correctly on layout changes
     }
+    
+    // MARK: - Private Methods
     
     private func setupCollectionView() {
         showsHorizontalScrollIndicator = false
@@ -77,10 +89,15 @@ class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UI
             return UICollectionViewCell()
         }
         
-        let stepAchievement = viewModel.achievements[indexPath.row]
-        let cellViewModel = AchievementsCellViewModel(date: stepAchievement.date, steps: stepAchievement.stepsString, image: stepAchievement.image)
+        let achievement = viewModel.achievements[indexPath.row]
+        let cellViewModel = AchievementsViewModel(achievement: achievement)
         cell.configure(with: cellViewModel)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedAchievement = cellForItem(at: indexPath) as? AchievementsCell
+        didTapCell?(viewModel.achievements[indexPath.row])
     }
 }

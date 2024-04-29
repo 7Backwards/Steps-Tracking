@@ -77,12 +77,21 @@ class HomeViewController: UIViewController {
             }
             let achievements = viewModel.calculateAchievements(from: stepsInMonth.days)
             achievementsCollectionView.viewModel.achievements = achievements
+            stepsChart.viewModel.stepsInMonth = stepsInMonth
             DispatchQueue.main.async { [weak self] in
                 self?.stepsCountLabel.text = stepsInMonth.getFormattedTotalSteps()
                 self?.setupAchievementLabel(achievementCount: String(achievements.count))
             }
         }
         .store(in: &subscriptions)
+        
+        achievementsCollectionView.didTapCell = { [weak self] achievement in
+            guard let self, let coordinator = viewModel.coordinator as? MainCoordinator else {
+                return
+            }
+            
+            coordinator.showAchievement(achievement)
+        }
     }
     
     private func setupVerticalStackView() {
@@ -117,7 +126,6 @@ class HomeViewController: UIViewController {
         profileImageView.layer.cornerRadius = profilePictureSize / 2 // Half the size for a circular image
         profileImageView.clipsToBounds = true
         
-        
         // Add both image views to the zStackView
         profilePictureZStackView.addSubview(profilePhotoBackground)
         profilePictureZStackView.addSubview(profileImageView)
@@ -125,7 +133,6 @@ class HomeViewController: UIViewController {
         
         // Setup constraints for zStackView
         NSLayoutConstraint.activate([
-            profilePictureZStackView.widthAnchor.constraint(equalToConstant: profilePictureSize),
             profilePictureZStackView.heightAnchor.constraint(equalToConstant: profilePictureSize)
         ])
         
@@ -134,11 +141,7 @@ class HomeViewController: UIViewController {
             profilePhotoBackground.centerXAnchor.constraint(equalTo: profilePictureZStackView.centerXAnchor),
             profilePhotoBackground.centerYAnchor.constraint(equalTo: profilePictureZStackView.centerYAnchor),
             profilePhotoBackground.widthAnchor.constraint(equalToConstant: backgroundSize),
-            profilePhotoBackground.heightAnchor.constraint(equalToConstant: backgroundSize)
-        ])
-        
-        // Setup constraints for profileImageView
-        NSLayoutConstraint.activate([
+            profilePhotoBackground.heightAnchor.constraint(equalToConstant: backgroundSize),
             profileImageView.centerXAnchor.constraint(equalTo: profilePictureZStackView.centerXAnchor),
             profileImageView.centerYAnchor.constraint(equalTo: profilePictureZStackView.centerYAnchor),
             profileImageView.widthAnchor.constraint(equalToConstant: profilePictureSize),
@@ -147,55 +150,65 @@ class HomeViewController: UIViewController {
     }
     
     private func setupStepsAndDate() {
-        // This stack view contains the Steps title and Date
-        let stepsTitleAndDateStackView = UIStackView()
-        stepsTitleAndDateStackView.axis = .vertical
-        stepsTitleAndDateStackView.spacing = 4
-
+        // Create a container view that will hold the horizontal stack view
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        verticalStackView.addArrangedSubview(containerView)
+        
+        // Create the horizontal stack view for steps count and date
         let stepsCountAndDateStackView = UIStackView()
         stepsCountAndDateStackView.axis = .horizontal
         stepsCountAndDateStackView.alignment = .center
-
-        verticalStackView.addArrangedSubview(stepsCountAndDateStackView)
-
-        // Add the "Steps" title and date labels to the stack view
-        stepsTitleAndDateStackView.addArrangedSubview(stepsTitleLabel)
+        stepsCountAndDateStackView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(stepsCountAndDateStackView)
+        
+        // Create the vertical stack view for the steps title and date
+        let stepsTitleAndDateStackView = UIStackView()
+        stepsTitleAndDateStackView.axis = .vertical
+        stepsTitleAndDateStackView.translatesAutoresizingMaskIntoConstraints = false
+        stepsCountAndDateStackView.addArrangedSubview(stepsTitleAndDateStackView)
+        
+        // Add the "Steps" title and date labels to the vertical stack view
         stepsTitleLabel.text = "Steps"
         stepsTitleLabel.font = UIFont.systemFont(ofSize: 32, weight: .black)
-
-        stepsTitleAndDateStackView.addArrangedSubview(dateLabel)
+        stepsTitleAndDateStackView.addArrangedSubview(stepsTitleLabel)
+        
         dateLabel.text = viewModel.session.utils.getCurrentMonthYear()
         dateLabel.alpha = 0.5
         dateLabel.font = UIFont.systemFont(ofSize: 18, weight: .light)
-
-        // Adding title and date stack view and the steps count label to the horizontal stack view
-        stepsCountAndDateStackView.addArrangedSubview(stepsTitleAndDateStackView)
-        stepsCountAndDateStackView.addArrangedSubview(stepsCountLabel)
+        stepsTitleAndDateStackView.addArrangedSubview(dateLabel)
+        
+        // Add the steps count label to the horizontal stack view
         stepsCountLabel.textAlignment = .right
         stepsCountLabel.textColor = .green01
-        stepsCountLabel.font = .systemFont(ofSize: 32, weight: .regular)
-
-        // Set constraints for the horizontal stack view
+        stepsCountLabel.font = UIFont.systemFont(ofSize: 32, weight: .regular)
+        stepsCountAndDateStackView.addArrangedSubview(stepsCountLabel)
+        
+        // Set constraints for the container view
         NSLayoutConstraint.activate([
-            stepsCountAndDateStackView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: horizontalMargin),
-            stepsCountAndDateStackView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor, constant: -horizontalMargin),
-            stepsCountAndDateStackView.centerXAnchor.constraint(equalTo: verticalStackView.centerXAnchor)
+            containerView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor)
+        ])
+        
+        // Set constraints for the horizontal stack view with leading and trailing margins
+        NSLayoutConstraint.activate([
+            stepsCountAndDateStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: horizontalMargin),
+            stepsCountAndDateStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -horizontalMargin),
+            stepsCountAndDateStackView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            stepsCountAndDateStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
-
 
     private func setupStepsChart() {
         
         stepsChart.translatesAutoresizingMaskIntoConstraints = false
         verticalStackView.addArrangedSubview(stepsChart)
-
+        
         NSLayoutConstraint.activate([
-            stepsChart.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
-            stepsChart.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
             stepsChart.heightAnchor.constraint(equalToConstant: 140)
         ])
     }
-
+    
     private func setupAchievementsCollectionView() {
         achievementsLabel.translatesAutoresizingMaskIntoConstraints = false
         achievementsLabel.textAlignment = .left
@@ -206,34 +219,32 @@ class HomeViewController: UIViewController {
         achievementsContainerView.translatesAutoresizingMaskIntoConstraints = false
         achievementsContainerView.clipsToBounds = true // Ensure it doesn't overlap other views
         verticalStackView.addArrangedSubview(achievementsContainerView)
-
+        
         achievementsContainerView.addSubview(achievementsLabel)
         achievementsContainerView.addSubview(achievementsCollectionView)
         
         // Constraints for the achievements container view
         NSLayoutConstraint.activate([
-            achievementsContainerView.topAnchor.constraint(equalTo: stepsChart.bottomAnchor, constant: 44),
             achievementsContainerView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
-            achievementsContainerView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
-            achievementsCollectionView.bottomAnchor.constraint(equalTo: achievementsContainerView.bottomAnchor, constant: -81) // Ensure spacing to the bottom
+            achievementsContainerView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor)
         ])
-
+        
         // Constraints for achievements title label
         NSLayoutConstraint.activate([
-            achievementsLabel.topAnchor.constraint(equalTo: achievementsContainerView.topAnchor),
+            achievementsLabel.topAnchor.constraint(equalTo: achievementsContainerView.topAnchor, constant: 37),
             achievementsLabel.leadingAnchor.constraint(equalTo: achievementsContainerView.leadingAnchor, constant: horizontalMargin),
-            achievementsLabel.trailingAnchor.constraint(equalTo: achievementsContainerView.trailingAnchor, constant: -horizontalMargin)
+            achievementsLabel.trailingAnchor.constraint(equalTo: achievementsContainerView.trailingAnchor, constant: -horizontalMargin),
         ])
         
         // Constraints for the achievements collection view
         NSLayoutConstraint.activate([
-            achievementsCollectionView.topAnchor.constraint(equalTo: achievementsLabel.bottomAnchor, constant: 24), // Space between label and collection view
+            achievementsCollectionView.topAnchor.constraint(equalTo: achievementsLabel.bottomAnchor, constant: 18), // Space between label and collection view
+            achievementsCollectionView.bottomAnchor.constraint(equalTo: achievementsContainerView.bottomAnchor, constant: -81), // Ensure spacing to the bottom
             achievementsCollectionView.leadingAnchor.constraint(equalTo: achievementsContainerView.leadingAnchor),
             achievementsCollectionView.trailingAnchor.constraint(equalTo: achievementsContainerView.trailingAnchor),
             achievementsCollectionView.heightAnchor.constraint(equalToConstant: 176) // Height of the collection view
         ])
     }
-
     
     private func setupAchievementLabel(achievementCount: String) {
         // Create an attributed string with different colors

@@ -8,23 +8,17 @@
 import UIKit
 
 class AchievementsCell: UICollectionViewCell {
-    
-    // MARK: - Properties
-    
-    var viewModel: AchievementsCellViewModel?
-    let imageViewSize: CGFloat = 116.0
 
     // MARK: - Views
-    let stepsLabel = UILabel()
-    let dateLabel = UILabel()
-    let achievementsImageView = UIImageView()
+
+    let achievementsView: AchievementView = AchievementView(frame: .zero, imageViewSize: 116, stepsLabelTextSize: 16, dateLabelTextSize: 13)
 
     // MARK: - Init
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        configureViews()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -33,57 +27,20 @@ class AchievementsCell: UICollectionViewCell {
     
     // MARK: - Public Methods
     
-    func configure(with viewModel: AchievementsCellViewModel) {
-        self.viewModel = viewModel
+    func configure(with viewModel: AchievementsViewModel) {
         // Configure the views with data from the viewModel
-        stepsLabel.text = viewModel.steps
-        dateLabel.text = viewModel.formattedDate
-        achievementsImageView.image = viewModel.image
+        achievementsView.configure(with: viewModel)
     }
     
     // MARK: - Private Methods
     
-    private func configureViews() {
-
-        // Image setup
-        achievementsImageView.contentMode = .scaleAspectFill
-        achievementsImageView.clipsToBounds = true
-        achievementsImageView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(achievementsImageView)
-        
-        achievementsImageView.layer.cornerRadius = imageViewSize / 2 // Half of the width to make it a circle
-        achievementsImageView.layer.masksToBounds = true
-        
-        stepsLabel.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
-        stepsLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(stepsLabel)
-        
-        // Date label setup
-        dateLabel.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        dateLabel.alpha = 0.5
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(dateLabel)
-        
-        setupConstraints()
-    }
-    
     private func setupConstraints() {
-        NSLayoutConstraint.activate([
+        addSubview(achievementsView)
+        achievementsView.translatesAutoresizingMaskIntoConstraints = false
 
-            // Setup Image constraints
-            achievementsImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            achievementsImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            achievementsImageView.widthAnchor.constraint(equalToConstant: imageViewSize),
-            achievementsImageView.heightAnchor.constraint(equalToConstant: imageViewSize),
-            
-            // Steps label constraints
-            stepsLabel.topAnchor.constraint(equalTo: achievementsImageView.bottomAnchor, constant: 8),
-            stepsLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            
-            // Date label constraints
-            dateLabel.topAnchor.constraint(equalTo: stepsLabel.bottomAnchor, constant: 4),
-            dateLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            dateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        NSLayoutConstraint.activate([
+            achievementsView.heightAnchor.constraint(equalToConstant: frame.height),
+            achievementsView.widthAnchor.constraint(equalToConstant: frame.width)
         ])
     }
 }
