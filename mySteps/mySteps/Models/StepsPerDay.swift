@@ -9,10 +9,10 @@ import Foundation
 
 struct StepsPerDay {
     let date: Date
-    let steps: Double
+    let steps: Int
     
     init(from managedObject: StepsPerDayMO) {
         self.date = managedObject.date
-        self.steps = managedObject.steps
+        self.steps = Int(managedObject.steps)
     }
 }

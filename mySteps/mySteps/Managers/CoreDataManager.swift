@@ -73,7 +73,7 @@ extension CoreDataManager {
     
     // MARK: - Public Methods
     
-    func insertStepsData(_ stepsData: [Date: Double]) {
+    func insertStepsData(_ stepsData: [Date: Int]) {
         persistentContainer.performBackgroundTask { [weak self] context in
             self?.clearStepsData(in: context)
             
@@ -94,7 +94,7 @@ extension CoreDataManager {
                     let steps = stepsData[date] ?? 0
                     let StepsPerDayMO = StepsPerDayMO(context: context)
                     StepsPerDayMO.date = date
-                    StepsPerDayMO.steps = steps
+                    StepsPerDayMO.steps = Int16(steps)
                     StepsPerDayMO.month = StepsInMonthMO // Link StepsPerDayMO to StepsInMonthMO
                 }
             }

@@ -13,11 +13,14 @@ class AchievementsTableView: UITableView {
 
     let viewModel: AchievementsTableViewModel
     private var subscriptions: [AnyCancellable] = []
+    private let noContentView = NoContentView(frame: .zero, image: UIImage(named: "no-steps")?.withTintColor(.grey02), title: "No achievements yet", message: "Take the first step!")
     
     init(viewModel: AchievementsTableViewModel, frame: CGRect = .zero, style: UITableView.Style = .plain) {
         self.viewModel = viewModel
-        super.init(frame: frame, style: style)
         
+        super.init(frame: frame, style: style)
+        delegate = self
+        dataSource = self
         setupTableView()
         setupObservers()
     }
@@ -26,19 +29,35 @@ class AchievementsTableView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        noContentView.frame = bounds // Ensure the no content view resizes correctly on layout changes
+    }
+    
     private func setupTableView() {
         register(AchievementsCell.self, forCellReuseIdentifier: "AchievementsCell")
     }
     
     private func setupObservers() {
-        viewModel.shouldReloadData.sink { [weak self] in
+        viewModel.shouldReloadData.receive(on: DispatchQueue.main).sink { [weak self] in
             self?.reloadData()
+            self?.updateNoContentView()
         }
         .store(in: &subscriptions)
     }
+    
+    private func updateNoContentView() {
+        noContentView.isHidden = !viewModel.achievements.isEmpty
+        if viewModel.achievements.isEmpty {
+            addSubview(noContentView)
+            noContentView.frame = bounds
+        } else {
+            noContentView.removeFromSuperview()
+        }
+    }
 }
 
-extension AchievementsTableView: UITableViewDataSource {
+extension AchievementsTableView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.achievements.count
     }

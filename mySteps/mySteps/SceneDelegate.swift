@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let constants = Constants()
         let databaseManager = DatabaseManager(coredataManager: CoreDataManager())
 
-        let session = Session(constants: constants, healthKitManager: HealthKitManager(databaseManager: databaseManager), databaseManager: databaseManager)
+        let session = Session(constants: constants, utils: Utils(), healthKitManager: HealthKitManager(databaseManager: databaseManager), databaseManager: databaseManager)
 
         window = UIWindow(frame: UIScreen.main.bounds)
 

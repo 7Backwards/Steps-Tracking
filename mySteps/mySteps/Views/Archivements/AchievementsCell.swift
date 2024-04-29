@@ -11,7 +11,8 @@ class AchievementsCell: UITableViewCell {
     
     // MARK: - Properties
     
-    let viewModel: AchievementsCellViewModel
+    var viewModel: AchievementsCellViewModel?
+    let width: CGFloat = 116.0
 
     // MARK: - Views
     let stepsLabel = UILabel()
@@ -20,8 +21,7 @@ class AchievementsCell: UITableViewCell {
 
     // MARK: - Init
 
-    init(viewModel: AchievementsCellViewModel, style: UITableViewCell.CellStyle = .default, reuseIdentifier: String? = nil) {
-        self.viewModel = viewModel
+    override init(style: UITableViewCell.CellStyle = .default, reuseIdentifier: String? = nil) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         configureViews()
@@ -34,6 +34,7 @@ class AchievementsCell: UITableViewCell {
     // MARK: - Public Methods
     
     func configure(with viewModel: AchievementsCellViewModel) {
+        self.viewModel = viewModel
         // Configure the views with data from the viewModel
         stepsLabel.text = "\(Int(viewModel.steps)) Steps"
         dateLabel.text = viewModel.formattedDate
@@ -50,7 +51,7 @@ class AchievementsCell: UITableViewCell {
         contentView.addSubview(achievementsImageView)
         
         // This will make the image view circular
-        achievementsImageView.layer.cornerRadius = viewModel.width / 2 // Half of the width to make it a circle
+        achievementsImageView.layer.cornerRadius = width / 2 // Half of the width to make it a circle
         achievementsImageView.layer.masksToBounds = true
         
         stepsLabel.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
@@ -71,8 +72,8 @@ class AchievementsCell: UITableViewCell {
             // Image constraints
             achievementsImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             achievementsImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            achievementsImageView.widthAnchor.constraint(equalToConstant: viewModel.width),
-            achievementsImageView.heightAnchor.constraint(equalToConstant: viewModel.width),
+            achievementsImageView.widthAnchor.constraint(equalToConstant: width),
+            achievementsImageView.heightAnchor.constraint(equalToConstant: width),
             
             // Steps label constraints
             stepsLabel.topAnchor.constraint(equalTo: achievementsImageView.bottomAnchor, constant: 8),

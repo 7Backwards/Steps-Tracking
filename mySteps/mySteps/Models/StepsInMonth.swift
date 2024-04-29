@@ -26,3 +26,11 @@ struct StepsInMonth {
         self.year = managedObject.year
     }
 }
+
+extension StepsInMonth {
+
+    func getTotalSteps() -> Int {
+        // Sum the steps for each day to get the total for the month.
+        days.reduce(0) { $0 + $1.steps }
+    }
+}

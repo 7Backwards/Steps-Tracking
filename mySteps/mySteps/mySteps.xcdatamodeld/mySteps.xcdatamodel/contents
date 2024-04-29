@@ -7,7 +7,7 @@
     </entity>
     <entity name="StepsPerDayMO" representedClassName="StepsPerDayMO" syncable="YES">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="steps" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="steps" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="month" maxCount="1" deletionRule="Cascade" destinationEntity="StepsInMonthMO" inverseName="days" inverseEntity="StepsInMonthMO"/>
     </entity>
 </model>

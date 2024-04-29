@@ -12,7 +12,6 @@ class AchievementsCellViewModel {
     let steps: Int
     let date: Date
     let image: UIImage?
-    let width: CGFloat = 116.0 // The fixed width for your cell's image view
 
     var formattedDate: String {
         let dateFormatter = DateFormatter()

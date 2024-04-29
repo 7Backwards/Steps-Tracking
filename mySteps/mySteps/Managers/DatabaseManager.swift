@@ -26,7 +26,7 @@ class DatabaseManager {
     
     // MARK: - Public Methods
     
-    func saveStepsData(_ stepsData: [Date: Double]) {
+    func saveStepsData(_ stepsData: [Date: Int]) {
         coreDataManager.insertStepsData(stepsData)
     }
     
