@@ -73,7 +73,7 @@ class CoreDataManagerTests: XCTestCase {
             XCTAssertEqual(results.count, 1, "There should be only one month data present.")
             let currentMonth = Calendar.current.component(.month, from: Date())
             let currentYear = Calendar.current.component(.year, from: Date())
-            XCTAssertTrue(results.allSatisfy { $0.year == Int16(currentYear) && $0.month == Int16(currentMonth) }, "Remaining data should be for the current month.")
+            XCTAssertTrue(results.allSatisfy { $0.year == Int32(currentYear) && $0.month == Int32(currentMonth) }, "Remaining data should be for the current month.")
         } catch {
             XCTFail("Failed to fetch StepsInMonthMO entities: \(error)")
         }
@@ -83,8 +83,8 @@ class CoreDataManagerTests: XCTestCase {
         let context = mockPersistentContainer.newBackgroundContext()
         context.performAndWait {
             let newStepsInMonthMO = StepsInMonthMO(context: context)
-            newStepsInMonthMO.year = Int16(Calendar.current.component(.year, from: date))
-            newStepsInMonthMO.month = Int16(Calendar.current.component(.month, from: date))
+            newStepsInMonthMO.year = Int32(Calendar.current.component(.year, from: date))
+            newStepsInMonthMO.month = Int32(Calendar.current.component(.month, from: date))
             
             do {
                 try context.save()

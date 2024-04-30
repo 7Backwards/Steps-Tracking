@@ -10,8 +10,8 @@ import OSLog
 
 struct StepsInMonth {
     let days: [StepsPerDay]
-    let month: Int16
-    let year: Int16
+    let month: Int32
+    let year: Int32
     
     init(from managedObject: StepsInMonthMO) {
         os_log("Initializing StepsInMonth with managedObject %@", type: .info, managedObject)

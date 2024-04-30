@@ -11,6 +11,6 @@ import CoreData
 
 @objc(StepsInMonthMO)
 public class StepsInMonthMO: NSManagedObject {
-    @NSManaged public var month: Int16
-    @NSManaged public var year: Int16
+    @NSManaged public var month: Int32
+    @NSManaged public var year: Int32
 }

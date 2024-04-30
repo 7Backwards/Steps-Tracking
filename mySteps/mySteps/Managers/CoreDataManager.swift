@@ -49,13 +49,13 @@ class CoreDataManager {
     func saveContext(context: NSManagedObjectContext) {
         if context.hasChanges {
             do {
-                // Check if StepsInMonthMO objects are affected and notify if necessary
-                let stepsInMonthMOAffected = context.registeredObjects.contains { object in
-                    object is StepsInMonthMO && (object.isUpdated || object.isInserted || object.isDeleted)
+                // Check if StepsPerDayMO objects are affected and notify if necessary
+                let stepsPerDayAffected = context.registeredObjects.contains { object in
+                    object is StepsPerDayMO && (object.isUpdated || object.isInserted || object.isDeleted)
                 }
                 try context.save()
 
-                if stepsInMonthMOAffected {
+                if stepsPerDayAffected {
                     stepsUpdated.send()
                     os_log("stepsUpdated", type: .debug)
                 }
@@ -94,8 +94,12 @@ extension CoreDataManager {
 
                 let stepsInMonthMO = existingMonthEntry ?? StepsInMonthMO(context: context)
                 if existingMonthEntry == nil {
-                    stepsInMonthMO.year = Int16(year)
-                    stepsInMonthMO.month = Int16(month)
+                    stepsInMonthMO.year = Int32(year)
+                    stepsInMonthMO.month = Int32(month)
+                }
+                
+                for steps in stepsData {
+                    print("new steps \(steps.key) \(steps.value)")
                 }
                 
                 for date in dates {
@@ -112,8 +116,7 @@ extension CoreDataManager {
                         stepsPerDayMO.month = stepsInMonthMO // Link StepsPerDayMO to StepsInMonthMO
                     }
 
-                    // Update steps count
-                    stepsPerDayMO.steps = Int16(steps)
+                    stepsPerDayMO.steps = Int32(steps)
                 }
             }
 
@@ -167,7 +170,7 @@ extension CoreDataManager {
             }
             
             // Create a predicate to fetch the StepsInMonthMO for the current year and month
-            fetchRequest.predicate = NSPredicate(format: "year == %d AND month == %d", Int16(calendar.component(.year, from: startOfMonth)), Int16(calendar.component(.month, from: startOfMonth)))
+            fetchRequest.predicate = NSPredicate(format: "year == %d AND month == %d", Int32(calendar.component(.year, from: startOfMonth)), Int32(calendar.component(.month, from: startOfMonth)))
             
             do {
                 // Execute the fetch request

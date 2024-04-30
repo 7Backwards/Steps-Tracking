@@ -17,7 +17,7 @@ extension StepsPerDayMO {
     }
 
     @NSManaged public var date: Date
-    @NSManaged public var steps: Int16
+    @NSManaged public var steps: Int32
     @NSManaged public var month: StepsInMonthMO?
 
 }
