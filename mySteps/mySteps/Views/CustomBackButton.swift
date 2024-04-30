@@ -31,11 +31,6 @@ class BackBarButtonItem: UIBarButtonItem {
         let backButton = UIButton(configuration: config, primaryAction: action)
         backButton.frame = CGRect(origin: CGPoint.zero, size: buttonSize)
         backButton.tintColor = .darkGray
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            backButton.widthAnchor.constraint(equalToConstant: buttonSize.width),
-            backButton.heightAnchor.constraint(equalToConstant: buttonSize.height)
-        ])
         
         customView = backButton
         accessibilityLabel = NSLocalizedString("back_button", comment: "")
