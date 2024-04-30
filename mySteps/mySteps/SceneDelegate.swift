@@ -11,6 +11,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    let databaseManager = DatabaseManager(coredataManager: CoreDataManager())
+    lazy var healthKitManager = HealthKitManager(databaseManager: databaseManager)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
@@ -18,9 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let navigationController = UINavigationController()
         let constants = Constants()
-        let databaseManager = DatabaseManager(coredataManager: CoreDataManager())
 
-        let session = Session(constants: constants, utils: Utils(), healthKitManager: HealthKitManager(databaseManager: databaseManager), databaseManager: databaseManager)
+        let session = Session(constants: constants, utils: Utils(), healthKitManager: healthKitManager, databaseManager: databaseManager)
 
         window = UIWindow(frame: UIScreen.main.bounds)
 
@@ -44,6 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        healthKitManager.startObservingStepsChanges()
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -62,6 +64,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
+        healthKitManager.stopObservingStepsChanges()
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 

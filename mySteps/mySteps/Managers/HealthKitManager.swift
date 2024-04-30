@@ -14,6 +14,7 @@ enum HealthKitManagerStatus {
     case observing
     case stopped
     case noPermissions
+    case initial
 }
 
 class HealthKitManager {
@@ -21,7 +22,7 @@ class HealthKitManager {
     // MARK: - Properties
     
     let databaseManager: DatabaseManager
-    var status = CurrentValueSubject<HealthKitManagerStatus, Never>(.noPermissions)
+    var status = CurrentValueSubject<HealthKitManagerStatus, Never>(.initial)
     private var subscriptions: [AnyCancellable] = []
     private let stepType: HKQuantityType? = HKQuantityType.quantityType(forIdentifier: .stepCount)
     private let healthStore = HKHealthStore()
@@ -54,9 +55,9 @@ class HealthKitManager {
         }
         
         // Handle case where user hasn't granted permissions yet
-        guard status.value != .noPermissions else {
+        guard status.value != .initial else {
             status
-                .first { $0 != .noPermissions }
+                .first { $0 != .initial }
                 .sink { [weak self] status in
                 self?.startObservingStepsChanges()
             }
@@ -66,7 +67,11 @@ class HealthKitManager {
 
         observerQuery = HKObserverQuery(sampleType: stepType, predicate: nil) { [weak self] query, completionHandler, error in
             if let error {
-                os_log("Error while observing healthKit changes %{public}@", type: .error, error.localizedDescription)
+                os_log("Error while observing HealthKit changes: %{public}@", type: .error, error.localizedDescription)
+
+                if let hkError = error as? HKError, hkError.code == .errorAuthorizationDenied {
+                    self?.status.send(.noPermissions)
+                }
                 return
             }
             
@@ -96,11 +101,8 @@ class HealthKitManager {
         }
     }
     
-    
-    // MARK: - Private Methods
-    
     // Method to fetch the latest steps data and save it to core data
-    private func fetchAndSaveStepsForCurrentMonth() {
+    func fetchAndSaveStepsForCurrentMonth() {
 
         // Use the current calendar to find the start and end of the month
         let calendar = Calendar.current
@@ -134,23 +136,35 @@ class HealthKitManager {
             if let error {
                 os_log("HealthKit Query Error: %{public}@", type: .error, error.localizedDescription)
             }
-
+            
             guard let statsCollection = results else {
                 os_log("HealthKit Query Failed: The query returned no results.", type: .error)
                 return
             }
             
             // Dictionary to hold the number of steps for each day
-            var StepsPerDayMO: [Date: Int] = [:]
+            var stepsPerDayMO: [Date: Int] = [:]
             
             // Enumerate through the collection and store the total steps for each day
             statsCollection.enumerateStatistics(from: startOfMonth, to: now) { statistics, stop in
                 let date = statistics.startDate
                 let steps = statistics.sumQuantity()?.doubleValue(for: HKUnit.count()) ?? 0
-                StepsPerDayMO[date] = Int(steps)
+                stepsPerDayMO[date] = Int(steps)
             }
-            
-            self?.databaseManager.saveStepsData(StepsPerDayMO)
+
+            let allStepsAreZero = stepsPerDayMO.allSatisfy { $0.value == 0 }
+
+            // We can assume that we dont have permission to read healthkit steps info, since per documentation the app cannot determine whether or not a user has granted permission to read data. If we are not given permission, it simply appears as if there is no data of the requested type in the HealthKit store.
+            if allStepsAreZero {
+                self?.status.send(.noPermissions)
+                self?.databaseManager.checkForExistingSteps { hasStepsData in
+                    if !hasStepsData {
+                        self?.databaseManager.saveStepsData(stepsPerDayMO)
+                    }
+                }
+            } else {
+                self?.databaseManager.saveStepsData(stepsPerDayMO)
+            }
         }
         
         // Execute the query

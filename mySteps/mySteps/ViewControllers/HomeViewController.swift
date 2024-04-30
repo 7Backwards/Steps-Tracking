@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import OSLog
 
 class HomeViewController: UIViewController {
     
@@ -91,6 +92,20 @@ class HomeViewController: UIViewController {
             }
             
             coordinator.showAchievement(achievement)
+        }
+        
+        viewModel.session.healthKitManager.status
+            .filter { $0 == .noPermissions }
+            .sink { [weak self] status in
+                self?.askHealthKitPermissions()
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func askHealthKitPermissions() {
+        let alertController = viewModel.session.utils.getShowHealthKitPermissionsAlert()
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alertController, animated: true)
         }
     }
     
@@ -281,8 +296,6 @@ class HomeViewController: UIViewController {
         ])
         
         achievementsText.append(numberText)
-        
         achievementsLabel.attributedText = achievementsText
     }
 }
-
