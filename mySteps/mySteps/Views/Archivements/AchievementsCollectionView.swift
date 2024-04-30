@@ -19,7 +19,7 @@ class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UI
     
     // MARK: - Views
     
-    private let noContentView = NoContentView(frame: .zero, image: UIImage(named: "no-steps")?.withTintColor(.grey02), title: "No achievements yet", message: "Take the first step!")
+    private let noContentView = NoContentView(frame: .zero, image: UIImage(named: "no-steps")?.withTintColor(.grey02), title: NSLocalizedString("no_achievements_yet", comment: ""), message: NSLocalizedString("take_first_step", comment: ""))
     
     // MARK: - Init
     

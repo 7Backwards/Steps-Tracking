@@ -38,7 +38,7 @@ class BackBarButtonItem: UIBarButtonItem {
         ])
         
         customView = backButton
-        accessibilityLabel = "Back Button"
+        accessibilityLabel = NSLocalizedString("back_button", comment: "")
     }
     
     required init?(coder: NSCoder) {

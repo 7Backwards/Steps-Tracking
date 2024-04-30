@@ -21,6 +21,7 @@
 		598A35662BE042E5007C770C /* AchievementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598A35652BE042E5007C770C /* AchievementViewController.swift */; };
 		598A35682BE04C1D007C770C /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598A35672BE04C1D007C770C /* CustomBackButton.swift */; };
 		598A356B2BE05A70007C770C /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598A356A2BE05A70007C770C /* Color+Extension.swift */; };
+		598A356D2BE13AA6007C770C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 598A356C2BE13AA6007C770C /* Localizable.xcstrings */; };
 		59AEB9B22BDC2D2C00E0AE3D /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9B12BDC2D2C00E0AE3D /* MainCoordinator.swift */; };
 		59AEB9B42BDC2D4200E0AE3D /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9B32BDC2D4200E0AE3D /* CoordinatorProtocol.swift */; };
 		59AEB9B62BDC2D8300E0AE3D /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AEB9B52BDC2D8300E0AE3D /* Session.swift */; };
@@ -96,6 +97,7 @@
 		598A35652BE042E5007C770C /* AchievementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementViewController.swift; sourceTree = "<group>"; };
 		598A35672BE04C1D007C770C /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
 		598A356A2BE05A70007C770C /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		598A356C2BE13AA6007C770C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		59AEB9B12BDC2D2C00E0AE3D /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		59AEB9B32BDC2D4200E0AE3D /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		59AEB9B52BDC2D8300E0AE3D /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				5909676C2BDC273D00B01910 /* LaunchScreen.storyboard */,
 				5909676F2BDC273D00B01910 /* Info.plist */,
 				590967672BDC273C00B01910 /* mySteps.xcdatamodeld */,
+				598A356C2BE13AA6007C770C /* Localizable.xcstrings */,
 			);
 			path = mySteps;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 590967522BDC273C00B01910;
 			packageReferences = (
@@ -422,6 +426,7 @@
 			files = (
 				5909676B2BDC273D00B01910 /* Assets.xcassets in Resources */,
 				5909676E2BDC273D00B01910 /* Base in Resources */,
+				598A356D2BE13AA6007C770C /* Localizable.xcstrings in Resources */,
 				590967662BDC273C00B01910 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

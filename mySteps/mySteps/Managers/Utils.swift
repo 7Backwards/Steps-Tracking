@@ -18,12 +18,12 @@ class Utils {
     
     func getShowHealthKitPermissionsAlert() -> UIAlertController {
         let alertController = UIAlertController(
-            title: "Health Data Required",
-            message: "This app requires access to your health data to function properly. Please enable health data access in Settings > Health > Data Access & Devices.",
+            title: NSLocalizedString("healthkit_permission_title", comment: ""),
+            message: NSLocalizedString("healthkit_permission_message", comment: ""),
             preferredStyle: .alert
         )
         
-        let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
+        let settingsAction = UIAlertAction(title: NSLocalizedString("settings", comment: ""), style: .default) { _ in
             // Redirect to the app's settings page
             guard let settingsUrl = URL(string: UIApplication.openSettingsURLString),
                   UIApplication.shared.canOpenURL(settingsUrl) else {
@@ -33,7 +33,7 @@ class Utils {
             UIApplication.shared.open(settingsUrl)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel)
         
         alertController.addAction(settingsAction)
         alertController.addAction(cancelAction)

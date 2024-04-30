@@ -206,7 +206,7 @@ class HomeViewController: UIViewController {
         stepsCountAndDateStackView.addArrangedSubview(stepsTitleAndDateStackView)
         
         // Add the "Steps" title and date labels to the vertical stack view
-        stepsTitleLabel.text = "Steps"
+        stepsTitleLabel.text = NSLocalizedString("steps", comment: "")
         stepsTitleLabel.font = UIFont.systemFont(ofSize: 32, weight: .black)
         stepsTitleAndDateStackView.addArrangedSubview(stepsTitleLabel)
         

@@ -37,7 +37,7 @@ class AchievementViewController: UIViewController, CustomBackButtonProtocol {
     
     private func configureNavigationBar() {
         // Set the title
-        title = "Achievement"
+        title = NSLocalizedString("achievement", comment: "")
 
         // Define the attributes for the title
         let attributes = [

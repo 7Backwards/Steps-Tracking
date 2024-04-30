@@ -38,19 +38,19 @@ enum StepAchievement: Int, CaseIterable {
     var formattedStepsString: String {
         switch self {
         case .tenK:
-            return "10k Steps"
+            return NSLocalizedString("10k_Steps", comment: "")
         case .fifteenK:
-            return "15k Steps"
+            return NSLocalizedString("15k_Steps", comment: "")
         case .twentyK:
-            return "20k Steps"
+            return NSLocalizedString("20k_Steps", comment: "")
         case .twentyFiveK:
-            return "25k Steps"
+            return NSLocalizedString("25k_Steps", comment: "")
         case .thirtyK:
-            return "30k Steps"
+            return NSLocalizedString("30k_Steps", comment: "")
         case .thirtyFiveK:
-            return "35k Steps"
+            return NSLocalizedString("35k_Steps", comment: "")
         case .fortyK:
-            return "40k Steps"
+            return NSLocalizedString("40k_Steps", comment: "")
         }
     }
 
@@ -75,6 +75,8 @@ enum StepAchievement: Int, CaseIterable {
     
     var description: String {
         let formattedStepCount = NumberFormatter.localizedString(from: NSNumber(value: self.rawValue), number: .decimal)
-        return "\(formattedStepCount) Steps achievement"
+        let formattedString = NSLocalizedString("number_steps_achievement", comment: "Number of steps achieved")
+        let resultString = String(format: formattedString, formattedStepCount)
+        return resultString
     }
 }
