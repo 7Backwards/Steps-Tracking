@@ -50,6 +50,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        os_log("HomeViewController loaded", type: .debug)
         viewModel.startObservingStepsChanges()
         setupObservers()
         setupViews()
@@ -70,13 +71,25 @@ class HomeViewController: UIViewController {
         setupStepsAndDate()
         setupStepsChart()
         setupAchievementsCollectionView()
+        setupAccessibility()
+    }
+    
+    private func setupAccessibility() {
+        profileImageView.accessibilityIdentifier = "profileImageView"
+        stepsCountLabel.accessibilityIdentifier = "stepsCountLabel"
+        dateLabel.accessibilityIdentifier = "dateLabel"
+        achievementsLabel.accessibilityIdentifier = "achievementsLabel"
+        achievementsCollectionView.accessibilityIdentifier = "achievementsCollectionView"
+        stepsChart.accessibilityIdentifier = "stepsChart"
     }
     
     private func setupObservers() {
         viewModel.session.databaseManager.stepsInCurrentMonth.sink { [weak self] stepsInMonth in
             guard let self, let stepsInMonth else {
+                os_log("Failed to receive steps data", type: .error)
                 return
             }
+            os_log("Received steps data for current month", type: .info)
             let achievements = viewModel.calculateAchievements(from: stepsInMonth.days)
             achievementsCollectionView.viewModel.achievements = achievements
             stepsChart.viewModel.stepsInMonth = stepsInMonth
@@ -89,9 +102,10 @@ class HomeViewController: UIViewController {
         
         achievementsCollectionView.didTapCell = { [weak self] achievement in
             guard let self, let coordinator = viewModel.coordinator as? MainCoordinator else {
+                os_log("Failed to handle tap on achievement due to missing coordinator", type: .error)
                 return
             }
-            
+            os_log("Achievement tapped: %@", type: .info, String(describing: achievement))
             coordinator.showAchievement(achievement)
         }
         
@@ -109,6 +123,7 @@ class HomeViewController: UIViewController {
             os_log("Already presenting an alert", type: .info)
             return
         }
+        os_log("No permissions for HealthKit, prompting user", type: .info)
 
         let alertController = viewModel.session.utils.getShowHealthKitPermissionsAlert()
         DispatchQueue.main.async { [weak self] in

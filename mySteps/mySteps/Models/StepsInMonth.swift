@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 struct StepsInMonth {
     let days: [StepsPerDay]
@@ -13,7 +14,7 @@ struct StepsInMonth {
     let year: Int16
     
     init(from managedObject: StepsInMonthMO) {
-        
+        os_log("Initializing StepsInMonth with managedObject %@", type: .info, managedObject)
         // 'days' is a CoreData ordered set
         if let daysSet = managedObject.days?.array as? [StepsPerDayMO] {
             let mappedDays = daysSet.map { StepsPerDay(from: $0) }

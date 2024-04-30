@@ -67,7 +67,6 @@ class AchievementView: UIView {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-
             // Setup Image constraints
             achievementsImageView.topAnchor.constraint(equalTo: topAnchor),
             achievementsImageView.centerXAnchor.constraint(equalTo: centerXAnchor),

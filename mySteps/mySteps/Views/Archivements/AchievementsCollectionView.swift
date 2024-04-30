@@ -67,6 +67,7 @@ class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UI
         viewModel.shouldReloadData.receive(on: DispatchQueue.main).sink { [weak self] in
             self?.reloadData()
             self?.updateNoContentView()
+            os_log("AchievementsCollectionView reloaded data", type: .info)
         }
         .store(in: &subscriptions)
     }
@@ -76,8 +77,10 @@ class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UI
         if viewModel.achievements.isEmpty {
             addSubview(noContentView)
             noContentView.frame = bounds
+            os_log("No content view displayed", type: .info)
         } else {
             noContentView.removeFromSuperview()
+            os_log("No content view removed", type: .info)
         }
     }
     
@@ -89,7 +92,7 @@ class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AchievementsCell", for: indexPath) as? AchievementsCell else {
-            os_log("Error retrieving AchievementsCell")
+            os_log("Error retrieving AchievementsCell", type: .error)
             return UICollectionViewCell()
         }
         
@@ -101,6 +104,7 @@ class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        os_log("Achievement selected: %@", type: .info, String(describing: viewModel.achievements[indexPath.row]))
         didTapCell?(viewModel.achievements[indexPath.row])
     }
 }

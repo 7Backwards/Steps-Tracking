@@ -121,10 +121,8 @@ extension CoreDataManager {
             self?.saveContext(context: context)
         }
     }
-    
-    // MARK: - Private methods
 
-    private func clearObsoleteStepsData(in context: NSManagedObjectContext) {
+    func clearObsoleteStepsData(in context: NSManagedObjectContext) {
         let calendar = Calendar.current
         let now = Date()
         let currentComponents = calendar.dateComponents([.year, .month], from: now)

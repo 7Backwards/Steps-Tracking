@@ -9,6 +9,7 @@ import UIKit
 import Combine
 import SwiftUI
 import Charts
+import OSLog
 
 class StepsChart: UIView {
     
@@ -28,11 +29,14 @@ class StepsChart: UIView {
     }
     
     private func setupChart() {
-
+        os_log("Setting up the StepsChart view", type: .info)
         let chartView = StepsChartView()
         hostingController = UIHostingController(rootView: chartView)
         
-        guard let hostingView = hostingController?.view else { return }
+        guard let hostingView = hostingController?.view else {
+            os_log("Failed to load the hosting controller view", type: .error)
+            return 
+        }
         hostingView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(hostingView)
         
@@ -47,6 +51,7 @@ class StepsChart: UIView {
         viewModel.shouldReloadData
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
+                os_log("Received notification to reload data in StepsChart", type: .info)
                 self?.updateChartData()
             }
             .store(in: &subscriptions)
@@ -54,9 +59,10 @@ class StepsChart: UIView {
     
     private func updateChartData() {
         guard let stepsData = viewModel.stepsInMonth?.days else {
+            os_log("No step data available to update the chart", type: .info)
             return
         }
-        
+        os_log("Updating chart data with %d entries", type: .info, stepsData.count)
         // Update the SwiftUI chart with the new data
         hostingController?.rootView = StepsChartView(stepsData: stepsData)
         hostingController?.view.setNeedsDisplay() // Refresh the view

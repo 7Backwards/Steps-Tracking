@@ -10,7 +10,7 @@ import Combine
 import HealthKit
 import OSLog
 
-enum HealthKitManagerStatus {
+enum HealthKitManagerStatus: Equatable {
     case observing
     case stopped
     case noPermissions
@@ -25,14 +25,15 @@ class HealthKitManager {
     var status = CurrentValueSubject<HealthKitManagerStatus, Never>(.initial)
     private var subscriptions: [AnyCancellable] = []
     private let stepType: HKQuantityType? = HKQuantityType.quantityType(forIdentifier: .stepCount)
-    private let healthStore = HKHealthStore()
+    private let healthStore: HKHealthStore
     private var observerQuery: HKObserverQuery?
     
     
     // MARK: - Init
 
-    init(databaseManager: DatabaseManager) {
+    init(databaseManager: DatabaseManager, healthStore: HKHealthStore = HKHealthStore()) {
         self.databaseManager = databaseManager
+        self.healthStore = healthStore
 
         guard let stepType else {
             os_log("Error getting stepType", type: .error)
