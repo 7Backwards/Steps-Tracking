@@ -18,6 +18,7 @@ class HomeViewController: UIViewController {
     private let profilePictureSize: CGFloat = 180
     private let backgroundSize: CGFloat = 360
     private let horizontalMargin: CGFloat = 24
+    private var presentingAlert: Bool = false
     
     // MARK: - Views
     
@@ -95,6 +96,7 @@ class HomeViewController: UIViewController {
         }
         
         viewModel.session.healthKitManager.status
+            .receive(on: DispatchQueue.main)
             .filter { $0 == .noPermissions }
             .sink { [weak self] status in
                 self?.askHealthKitPermissions()
@@ -103,9 +105,17 @@ class HomeViewController: UIViewController {
     }
     
     private func askHealthKitPermissions() {
+        guard !presentingAlert else {
+            os_log("Already presenting an alert", type: .info)
+            return
+        }
+
         let alertController = viewModel.session.utils.getShowHealthKitPermissionsAlert()
         DispatchQueue.main.async { [weak self] in
-            self?.present(alertController, animated: true)
+            self?.presentingAlert = true
+            self?.present(alertController, animated: true) { 
+                self?.presentingAlert = false
+            }
         }
     }
     

@@ -35,10 +35,6 @@ class MainCoordinator: CoordinatorProtocol {
     }
     
     func showAchievement(_ achievement: Achievement) {
-
-        guard let presentedViewController else {
-            return
-        }
         
         let achievementViewController = AchievementViewController(achievement: achievement)
         

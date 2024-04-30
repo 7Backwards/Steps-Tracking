@@ -110,14 +110,14 @@ class HealthKitManager {
         let components = calendar.dateComponents([.year, .month], from: now)
         guard 
             let startOfMonth = calendar.date(from: components),
-            let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth)
+            let endOfToday = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: now) // Set to end of today
         else {
             os_log("Error getting startOfMonth or endOfMonth", type: .error)
             return
         }
         
         // Create the predicate for the query
-        let predicate = HKQuery.predicateForSamples(withStart: startOfMonth, end: endOfMonth, options: .strictStartDate)
+        let predicate = HKQuery.predicateForSamples(withStart: startOfMonth, end: endOfToday, options: .strictStartDate)
         
         guard let stepType else {
             os_log("Error getting stepType", type: .error)

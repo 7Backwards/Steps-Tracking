@@ -101,7 +101,6 @@ class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedAchievement = cellForItem(at: indexPath) as? AchievementsCell
         didTapCell?(viewModel.achievements[indexPath.row])
     }
 }

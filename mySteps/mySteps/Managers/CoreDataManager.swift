@@ -50,14 +50,14 @@ class CoreDataManager {
         if context.hasChanges {
             do {
                 // Check if StepsInMonthMO objects are affected and notify if necessary
-                let StepsInMonthMOAffected = context.registeredObjects.contains { object in
+                let stepsInMonthMOAffected = context.registeredObjects.contains { object in
                     object is StepsInMonthMO && (object.isUpdated || object.isInserted || object.isDeleted)
                 }
                 try context.save()
 
-                if StepsInMonthMOAffected {
+                if stepsInMonthMOAffected {
                     stepsUpdated.send()
-                    print("stepsUpdated")
+                    os_log("stepsUpdated", type: .debug)
                 }
             } catch {
                 let nserror = error as NSError
@@ -75,54 +75,78 @@ extension CoreDataManager {
     
     func insertStepsData(_ stepsData: [Date: Int]) {
         persistentContainer.performBackgroundTask { [weak self] context in
-            self?.clearStepsData(in: context)
-            
-            // Map the [Date: Double] dictionary to a month and its corresponding steps
+            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            // Fetch existing data or clear data that's no longer needed
+            self?.clearObsoleteStepsData(in: context)
+
             let groupedByMonth = Dictionary(grouping: stepsData.keys) { Calendar.current.dateComponents([.year, .month], from: $0) }
-            
-            // Loop through the grouped data to insert
+
             for (monthComponents, dates) in groupedByMonth {
-                let StepsInMonthMO = StepsInMonthMO(context: context)
                 guard let year = monthComponents.year, let month = monthComponents.month else { 
-                    os_log("Error retreving year or month", type: .error)
+                    os_log("Error retrieving year or month", type: .error)
                     return
                 } 
-                StepsInMonthMO.year = Int16(year) 
-                StepsInMonthMO.month = Int16(month)
+
+                let fetchRequest: NSFetchRequest<StepsInMonthMO> = StepsInMonthMO.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "year == %d AND month == %d", year, month)
+                
+                let existingMonthEntry = (try? context.fetch(fetchRequest))?.first
+
+                let stepsInMonthMO = existingMonthEntry ?? StepsInMonthMO(context: context)
+                if existingMonthEntry == nil {
+                    stepsInMonthMO.year = Int16(year)
+                    stepsInMonthMO.month = Int16(month)
+                }
                 
                 for date in dates {
                     let steps = stepsData[date] ?? 0
-                    let StepsPerDayMO = StepsPerDayMO(context: context)
-                    StepsPerDayMO.date = date
-                    StepsPerDayMO.steps = Int16(steps)
-                    StepsPerDayMO.month = StepsInMonthMO // Link StepsPerDayMO to StepsInMonthMO
+
+                    let fetchRequestPerDay: NSFetchRequest<StepsPerDayMO> = StepsPerDayMO.fetchRequest()
+                    fetchRequestPerDay.predicate = NSPredicate(format: "date == %@", date as NSDate)
+                    
+                    let existingDayEntry = (try? context.fetch(fetchRequestPerDay))?.first
+                    
+                    let stepsPerDayMO = existingDayEntry ?? StepsPerDayMO(context: context)
+                    if existingDayEntry == nil {
+                        stepsPerDayMO.date = date
+                        stepsPerDayMO.month = stepsInMonthMO // Link StepsPerDayMO to StepsInMonthMO
+                    }
+
+                    // Update steps count
+                    stepsPerDayMO.steps = Int16(steps)
                 }
             }
-            
-            // Save the new steps data
+
+            // Save the new or updated steps data
             self?.saveContext(context: context)
         }
     }
     
     // MARK: - Private methods
-    
-    private func clearStepsData(in context: NSManagedObjectContext) {
+
+    private func clearObsoleteStepsData(in context: NSManagedObjectContext) {
+        let calendar = Calendar.current
+        let now = Date()
+        let currentComponents = calendar.dateComponents([.year, .month], from: now)
         
-        // Create fetch requests for the entities you want to clear
-        let StepsInMonthMOFetchRequest: NSFetchRequest<NSFetchRequestResult> = StepsInMonthMO.fetchRequest()
-        
-        // Create batch delete requests for each entity
-        let StepsInMonthMODeleteRequest = NSBatchDeleteRequest(fetchRequest: StepsInMonthMOFetchRequest)
+        guard let currentYear = currentComponents.year, let currentMonth = currentComponents.month else {
+            os_log("Current year and month could not be retrieved", type: .error)
+            return
+        }
+
+        let fetchRequest: NSFetchRequest<StepsInMonthMO> = StepsInMonthMO.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "year != %d OR month != %d", currentYear, currentMonth)
         
         do {
-            // Perform the batch delete operation
-            try context.execute(StepsInMonthMODeleteRequest)
-            
-            // Save any changes to the context
+            let results = try context.fetch(fetchRequest)
+            for object in results {
+                print("deleted object \(object.month) \(object.year)")
+                context.delete(object)
+            }
             try context.save()
-        } catch {
-            // Handle any errors here, such as logging or presenting an alert to the user
-            os_log("Error clearing steps data: %{public}@", type: .error, error.localizedDescription)
+            os_log("Obsolete steps data cleared.", type: .info)
+        } catch let error as NSError {
+            os_log("Could not clear obsolete steps data: %@", type: .error, error.localizedDescription)
         }
     }
 }
@@ -139,7 +163,7 @@ extension CoreDataManager {
             let calendar = Calendar.current
             let now = Date()
             guard let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: now)),
-                  let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) else {
+                  let endOfMonth = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: now) else {
                 completion(nil, NSError(domain: "CoreDataManager", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to construct the date range for the current month."]))
                 return
             }
