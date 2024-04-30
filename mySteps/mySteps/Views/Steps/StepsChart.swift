@@ -104,8 +104,11 @@ struct StepsChartView: View {
             }
             .chartXScale(domain: 0...35)
             .chartYAxis {
-                AxisMarks(preset: .aligned, position: .trailing) { _ in
-                    AxisGridLine()
+                AxisMarks(preset: .aligned, position: .trailing) { value in
+                    // Hide last y grid line as per design
+                    if value.index < 3 {
+                        AxisGridLine()
+                    }
                     AxisValueLabel()
                 }
             }
