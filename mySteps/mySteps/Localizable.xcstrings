@@ -258,22 +258,6 @@
         }
       }
     },
-    "steps" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "steps"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "steps_fr"
-          }
-        }
-      }
-    },
     "Steps" : {
       "localizations" : {
         "en" : {
