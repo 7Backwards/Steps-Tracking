@@ -46,9 +46,8 @@ class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UI
     
     override func layoutSubviews() {
         super.layoutSubviews()
-
         // Adding contentInset so that we match the design default scroll state
-        contentInset = UIEdgeInsets(top: 0, left: 33, bottom: 0, right: 0)
+        setContentInset()
         noContentView.frame = bounds // Ensure the no content view resizes correctly on layout changes
     }
     
@@ -56,7 +55,12 @@ class AchievementsCollectionView: UICollectionView, UICollectionViewDelegate, UI
     
     private func setupCollectionView() {
         showsHorizontalScrollIndicator = false
+        setContentInset()
         register(AchievementsCell.self, forCellWithReuseIdentifier: "AchievementsCell")
+    }
+    
+    private func setContentInset() {
+        contentInset = UIEdgeInsets(top: 0, left: 33, bottom: 0, right: 0)
     }
     
     private func setupObservers() {
