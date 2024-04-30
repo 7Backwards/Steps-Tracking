@@ -20,17 +20,18 @@ class HomeViewController: UIViewController {
     
     // MARK: - Views
     
+    private let scrollView = UIScrollView()
+    private let verticalStackView = UIStackView()
+    private let profilePictureZStackView = UIView()
     private let profilePhotoBackground = UIImageView()
+    private let profileImageView = UIImageView()
+    private let stepsCountAndDateStackView = UIStackView()
     private let stepsTitleLabel = UILabel()
     private let dateLabel = UILabel()
     private let stepsCountLabel = UILabel()
-    private let achievementsLabel = UILabel()
-    private let profileImageView = UIImageView()
-    private let profilePictureZStackView = UIView()
-    private let verticalStackView = UIStackView()
-    private let stepsCountAndDateStackView = UIStackView()
-    private let achievementsCollectionView = AchievementsCollectionView(viewModel: AchievementsCollectionViewModel())
     private let stepsChart = StepsChart(viewModel: StepsChartViewModel())
+    private let achievementsLabel = UILabel()
+    private let achievementsCollectionView = AchievementsCollectionView(viewModel: AchievementsCollectionViewModel())
     
     // MARK: - Init
     
@@ -57,12 +58,11 @@ class HomeViewController: UIViewController {
         viewModel.stopObservingStepsChanges()
     }
     
-    // MARK: - Public methods
-    
     // MARK: - Private methods
     
     private func setupViews() {
         view.backgroundColor = .systemBackground
+        setupScrollView()
         setupVerticalStackView()
         setupProfileImageView()
         setupStepsAndDate()
@@ -94,16 +94,38 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // MARK: - Setup UI
+    
+    private func setupScrollView() {
+        // Create and configure the scroll view
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = false
+        view.addSubview(scrollView)
+        
+        // Setup constraints for the scroll view to fill the entire view
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        // Add the verticalStackView to the scroll view
+        scrollView.addSubview(verticalStackView)
+    }
+    
     private func setupVerticalStackView() {
-        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(verticalStackView)
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 7
+        
+        // Setup verticalStackView inside the scrollView
+        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            verticalStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            verticalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            verticalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            verticalStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            verticalStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            verticalStackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            verticalStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            verticalStackView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
         ])
     }
     
@@ -198,7 +220,7 @@ class HomeViewController: UIViewController {
             stepsCountAndDateStackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
-
+    
     private func setupStepsChart() {
         
         stepsChart.translatesAutoresizingMaskIntoConstraints = false
