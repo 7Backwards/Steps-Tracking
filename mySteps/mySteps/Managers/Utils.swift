@@ -9,6 +9,9 @@ import UIKit
 import Foundation
 
 class Utils {
+    
+    // MARK: - Public Methods
+    
     func getCurrentMonthYear() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM yyyy"

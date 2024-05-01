@@ -19,9 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let navigationController = UINavigationController()
-        let constants = Constants()
 
-        let session = Session(constants: constants, utils: Utils(), healthKitManager: healthKitManager, databaseManager: databaseManager)
+        let session = Session(utils: Utils(), healthKitManager: healthKitManager, databaseManager: databaseManager)
 
         window = UIWindow(frame: UIScreen.main.bounds)
 

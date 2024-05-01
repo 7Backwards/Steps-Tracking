@@ -8,14 +8,21 @@
 import Foundation
 
 class HomeViewModel: ViewModelProtocol {
+    
+    // MARK: - Properties
+
     let session: Session
     let coordinator: CoordinatorProtocol
     var totalSteps: Double = 0
+
+    // MARK: - Init
     
     init(session: Session, coordinator: CoordinatorProtocol) {
         self.session = session
         self.coordinator = coordinator
     }
+    
+    // MARK: - Public Methods
     
     func startObservingStepsChanges() {
         session.healthKitManager.startObservingStepsChanges()

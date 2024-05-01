@@ -31,25 +31,6 @@ class DatabaseManager {
         coreDataManager.insertStepsData(stepsData)
     }
     
-    // MARK: - Private Methods
-
-    private func setupObservers() {
-        coreDataManager.stepsUpdated.sink {
-            self.fetchCurrentMonthSteps()
-        }
-        .store(in: &cancellables)
-    }
-    
-    func fetchCurrentMonthSteps() {
-        coreDataManager.fetchStepsForCurrentMonth { [weak self] stepsInMonthMO, error in
-            if let stepsInMonthMO {
-                self?.stepsInCurrentMonth.send(StepsInMonth(from: stepsInMonthMO))
-            } else if let error {
-                os_log("Error fetching steps: %{public}@", type: .error, error.localizedDescription)
-            }
-        }
-    }
-    
     func checkForExistingSteps(completion: @escaping (Bool) -> Void) {
         coreDataManager.fetchStepsForCurrentMonth { stepsInMonthMO, error in
             if let error = error {
@@ -59,6 +40,25 @@ class DatabaseManager {
                 // Check if the fetched data is not nil and not empty
                 let hasData = stepsInMonthMO != nil
                 completion(hasData)
+            }
+        }
+    }
+    
+    // MARK: - Private Methods
+
+    private func setupObservers() {
+        coreDataManager.stepsUpdated.sink {
+            self.fetchCurrentMonthSteps()
+        }
+        .store(in: &cancellables)
+    }
+    
+    private func fetchCurrentMonthSteps() {
+        coreDataManager.fetchStepsForCurrentMonth { [weak self] stepsInMonthMO, error in
+            if let stepsInMonthMO {
+                self?.stepsInCurrentMonth.send(StepsInMonth(from: stepsInMonthMO))
+            } else if let error {
+                os_log("Error fetching steps: %{public}@", type: .error, error.localizedDescription)
             }
         }
     }

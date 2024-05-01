@@ -11,6 +11,7 @@ import Combine
 import OSLog
 
 class CoreDataManager {
+
     // MARK: - Properties
     
     var stepsUpdated = PassthroughSubject<Void, Never>()
@@ -155,6 +156,8 @@ extension CoreDataManager {
 // MARK: - Extension (Fetch)
 
 extension CoreDataManager {
+    
+    // MARK: - Public Methods
     
     func fetchStepsForCurrentMonth(completion: @escaping (StepsInMonthMO?, Error?) -> Void) {
         persistentContainer.performBackgroundTask { context in

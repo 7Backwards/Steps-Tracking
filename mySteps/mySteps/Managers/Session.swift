@@ -11,15 +11,13 @@ class Session {
 
     // MARK: Properties
 
-    let constants: Constants
     let utils: Utils
     let healthKitManager: HealthKitManager
     let databaseManager: DatabaseManager
 
     // MARK: Lifecycle
 
-    init(constants: Constants, utils: Utils, healthKitManager: HealthKitManager, databaseManager: DatabaseManager) {
-        self.constants = constants
+    init(utils: Utils, healthKitManager: HealthKitManager, databaseManager: DatabaseManager) {
         self.utils = utils
         self.healthKitManager = healthKitManager
         self.databaseManager = databaseManager

@@ -22,6 +22,8 @@ extension CustomBackButtonProtocol where Self: UIViewController {
 
 class BackBarButtonItem: UIBarButtonItem {
     
+    // MARK: - Init 
+
     init(modalPresentation: Bool, action: UIAction) {
         super.init()
 

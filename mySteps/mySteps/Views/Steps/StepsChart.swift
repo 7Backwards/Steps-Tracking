@@ -13,11 +13,14 @@ import OSLog
 
 class StepsChart: UIView {
     
+    // MARK: - Properties
+    
     let viewModel: StepsChartViewModel
     private var subscriptions = Set<AnyCancellable>()
-    
     private var hostingController: UIHostingController<StepsChartView>?
 
+    // MARK: - Init
+    
     init(viewModel: StepsChartViewModel, frame: CGRect = .zero) {
         self.viewModel = viewModel
         super.init(frame: frame)
@@ -27,6 +30,8 @@ class StepsChart: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Private Methods
     
     private func setupChart() {
         os_log("Setting up the StepsChart view", type: .info)
@@ -70,7 +75,12 @@ class StepsChart: UIView {
 }
 
 struct StepsChartView: View {
+    
+    // MARK: - Properties
+
     var stepsData: [StepsPerDay]?
+    
+    // MARK: - Body
     
     var body: some View {
         let gradient = LinearGradient(

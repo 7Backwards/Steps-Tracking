@@ -12,6 +12,8 @@ import UIKit
 
 class AchievementsCollectionViewModel {
     
+    // MARK: - Properties
+
     let shouldReloadData = PassthroughSubject<Void, Never>()
     let cellWidthSize: CGFloat = 116
     let cellHeightSize: CGFloat = 160

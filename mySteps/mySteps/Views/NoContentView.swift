@@ -8,6 +8,9 @@
 import UIKit
 
 class NoContentView: UIView {
+    
+    // MARK: - Properties
+
     private let imageView = UIImageView()
     private let titleLabel = UILabel()
     private let messageLabel = UILabel()
@@ -15,6 +18,8 @@ class NoContentView: UIView {
     let image: UIImage?
     let title: String
     let message: String
+
+    // MARK: - Init
 
     init(frame: CGRect, image: UIImage?, title: String, message: String) {
         self.image = image
@@ -27,6 +32,8 @@ class NoContentView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Private Methods
     
     private func setupViews() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
