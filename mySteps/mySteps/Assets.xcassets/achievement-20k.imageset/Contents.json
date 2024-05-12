@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "achievement-20k.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
